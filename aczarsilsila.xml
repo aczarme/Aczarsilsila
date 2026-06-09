@@ -1,0 +1,3174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.0.0' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
+<title>Aczar</title>
+<!-- Layout fix: blok warna hanya penanda leluhur, orang penghubung boleh di tengah -->
+<b:skin><![CDATA[
+:root{
+  --bg:#f4f7f2;
+  --panel:#ffffff;
+  --text:#152019;
+  --muted:#68766c;
+  --line:#dbe6dc;
+  --edge:#1b1f1b;
+  --activeEdge:#d8a719;
+  --green:#2f7047;
+  --green2:#285d3d;
+  --grid:rgba(47,112,71,.10);
+  --danger:#b3261e;
+  --shadow:0 18px 50px rgba(27,56,35,.13);
+}
+body.dark{
+  --bg:#101712;
+  --panel:#162018;
+  --text:#eef7f0;
+  --muted:#a8b6aa;
+  --line:#2e3b31;
+  --edge:#eef7f0;
+  --activeEdge:#f2c94c;
+  --green:#76b886;
+  --green2:#5fa473;
+  --grid:rgba(118,184,134,.13);
+  --danger:#ff8a80;
+  --shadow:0 18px 50px rgba(0,0,0,.40);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input,select,textarea{font:inherit}
+.hide{display:none!important}
+#app{width:100vw;height:100vh;background:var(--bg)}
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.loginBox{
+  width:min(330px,100%);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+.loginTitle{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+  margin:0 0 22px;
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel);
+  color:var(--text);
+  padding:0 14px;
+  outline:none;
+  margin-bottom:12px;
+}
+input,select{height:50px}
+textarea{min-height:96px;padding:12px 14px;resize:vertical;line-height:1.45}
+input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(47,112,71,.12)}
+
+.birthGrid{
+  display:grid;
+  grid-template-columns:2fr .75fr 1.05fr .9fr;
+  gap:8px;
+  margin-bottom:12px;
+}
+.birthGrid input,.birthGrid select{margin-bottom:0;height:50px;padding:0 12px}
+.birthGrid .place{min-width:0}
+@media(max-width:480px){.birthGrid{grid-template-columns:1fr 1fr}.birthGrid .place{grid-column:1 / -1}}
+.btn{
+  border:0;
+  border-radius:15px;
+  background:var(--green);
+  color:#fff;
+  font-weight:900;
+  height:48px;
+  padding:0 16px;
+  cursor:pointer;
+}
+.btn:hover{background:var(--green2)}
+.btn.ghost{background:var(--panel);color:var(--text);border:1px solid var(--line)}
+.btn.danger{background:var(--panel);color:var(--danger);border:1px solid rgba(179,38,30,.25)}
+.msg{
+  margin-top:12px;
+  min-height:18px;
+  color:var(--danger);
+  font-weight:800;
+  font-size:13px;
+  line-height:1.4;
+}
+.themeBtn{
+  width:46px;
+  height:40px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  box-shadow:none;
+  z-index:1000;
+  cursor:pointer;
+  font-weight:900;
+  flex:0 0 auto;
+}
+.logoutBtn{
+  border-color:rgba(179,38,30,.30)!important;
+  color:var(--danger)!important;
+  background:var(--panel)!important;
+}
+.logoutBtn:hover{background:rgba(179,38,30,.08)!important}
+.menuWrap{position:relative;flex:0 0 auto}
+.menuBtn{
+  width:46px;
+  height:40px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  font-weight:900;
+  cursor:pointer;
+}
+.menuPanel{
+  position:absolute;
+  right:0;
+  top:48px;
+  width:230px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:8px;
+  z-index:100;
+}
+.menuItem{
+  width:100%;
+  min-height:42px;
+  border:0;
+  border-radius:13px;
+  background:transparent;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  font-weight:850;
+  cursor:pointer;
+  text-align:left;
+}
+.menuItem:hover{background:rgba(47,112,71,.09)}
+.menuItem.danger{color:var(--danger)}
+.menuIcon{width:22px;text-align:center;flex:0 0 auto}
+.menuText{flex:1}
+.topbar{
+  height:56px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
+}
+.brand{font-weight:900;white-space:nowrap;color:var(--green);font-size:19px}
+.searchWrap{flex:1;position:relative}
+.searchWrap input{height:40px;margin:0}
+.searchList{
+  position:absolute;
+  left:0;
+  right:0;
+  top:46px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  z-index:30;
+}
+.searchItem{padding:12px;border-bottom:1px solid var(--line);cursor:pointer}
+.searchItem:hover{background:rgba(47,112,71,.08)}
+.main{
+  height:calc(100vh - 56px);
+  display:grid;
+  grid-template-columns:1fr;
+}
+.main.detailOpen{grid-template-columns:1fr 360px;}
+.canvas{
+  position:relative;
+  overflow:hidden;
+  touch-action:none;
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+.stage{
+  position:absolute;
+  left:0;
+  top:0;
+  transform-origin:0 0;
+}
+.lines{
+  position:absolute;
+  left:0;
+  top:0;
+  overflow:visible;
+  pointer-events:none;
+}
+.edge{
+  stroke:var(--edge);
+  stroke-width:3.2;
+  fill:none;
+  opacity:.9;
+}
+.edge.active{
+  stroke:var(--activeEdge);
+  stroke-width:4.4;
+  opacity:1;
+}
+.nodes{position:absolute;left:0;top:0}
+.ancestorBlock{
+  position:absolute;
+  border-radius:24px;
+  border:1px solid rgba(47,112,71,.20);
+  pointer-events:none;
+  z-index:0;
+}
+.node,.inlineChoice,.edgeToggle,.sibToggle{z-index:10}
+.edgeToggle{z-index:25}
+.sibToggle{z-index:24}
+.emptyPlus{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  border:0;
+  background:var(--green);
+  color:#fff;
+  font-size:52px;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 22px 50px rgba(47,112,71,.25);
+  z-index:50;
+  pointer-events:auto;
+}
+.node{
+  position:absolute;
+  width:150px;
+  min-height:70px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:19px;
+  box-shadow:0 12px 30px rgba(20,35,22,.10);
+  text-align:center;
+  padding:16px 10px 14px;
+  cursor:pointer;
+  user-select:none;
+}
+.node.active{
+  border-color:var(--green);
+  outline:4px solid rgba(47,112,71,.15);
+}
+.nodeName{font-weight:900;font-size:14px;line-height:1.25;padding:0 6px}
+.nodeMeta{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin-top:6px;
+}
+.nodeDate{font-size:11px;color:var(--muted);line-height:1.25;padding:0;text-align:left}
+.genderIcon{
+  position:static;
+  flex:0 0 auto;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:900;
+  color:#fff;
+  box-shadow:0 6px 14px rgba(0,0,0,.12);
+}
+.genderIcon.male{background:#2f80ed}
+.genderIcon.female{background:#e85d9a}
+.genderIcon.unknown{background:#8a958c}
+.nodePlus{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:2px solid var(--panel);
+  background:var(--green);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  line-height:1;
+  z-index:20;
+}
+.nodePlus.top{top:-16px}
+.nodePlus.bottom{bottom:-16px}
+.inlineChoice{
+  position:absolute;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  z-index:25;
+  pointer-events:auto;
+}
+.inlineChoice.parent{transform:translate(-50%,-100%)}
+.inlineChoice.child{transform:translate(-50%,0)}
+.relationBox{
+  min-width:92px;
+  height:44px;
+  padding:0 14px;
+  border-radius:14px;
+  border:2px solid var(--green);
+  background:var(--panel);
+  color:var(--green);
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(27,56,35,.10);
+}
+.relationBox:hover{background:rgba(47,112,71,.09)}
+
+
+.incompleteDot{
+  position:absolute;
+  left:9px;
+  top:9px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#f59e0b;
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 14px rgba(245,158,11,.25);
+}
+.missingBox{
+  border:1px solid rgba(245,158,11,.35);
+  background:rgba(245,158,11,.08);
+  color:#9a5b00;
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.35;
+  margin-top:8px;
+}
+body.dark .missingBox{color:#ffd38a;background:rgba(245,158,11,.13)}
+.copyOk{
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
+  margin-top:8px;
+  min-height:16px;
+  text-align:center;
+}
+.exportBusy{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.35);
+}
+.exportBusy div{
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px 18px;
+  font-weight:900;
+  box-shadow:var(--shadow);
+}
+
+.branchToggle{
+  position:absolute;
+  right:-13px;
+  top:50%;
+  transform:translateY(-50%);
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  border:2px solid var(--panel);
+  background:var(--green);
+  color:#fff;
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  cursor:pointer;
+  z-index:21;
+  box-shadow:0 8px 18px rgba(0,0,0,.14);
+}
+.branchToggle{background:#d8a719;color:#fff}
+.branchToggle.open{background:var(--danger)}
+
+.sibToggle{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:2px solid #fff;
+  color:#fff;
+  font-size:11px;
+  line-height:1;
+  font-weight:900;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:none;
+}
+.sibToggle.left{left:-7px}
+.sibToggle.right{right:-7px}
+.sibToggle.close{background:var(--danger)}
+.sibToggle.open{background:var(--gold);color:#fff}
+.sibToggle.open.closePair{top:72%}
+.sibToggle.close.openPair{top:28%}
+
+.edgeToggle{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  border:2px solid var(--panel);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:12px;
+  line-height:1;
+  cursor:pointer;
+  z-index:22;
+  box-shadow:none;
+  transform:translate(-50%,-50%);
+}
+.edgeToggle.open{background:#d8a719;color:#fff}
+.edgeToggle.close{background:var(--danger);color:#fff}
+.edgeToggle:hover{filter:brightness(.96);transform:translate(-50%,-50%) scale(1.05)}
+.modePill{
+  height:40px;
+  min-width:78px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--panel);
+  color:var(--green);
+  font-weight:900;
+  padding:0 12px;
+  white-space:nowrap;
+}
+.pickList{max-height:55vh;overflow:auto;display:grid;gap:7px;margin:10px 0}
+.pickRow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:13px;padding:9px;background:var(--panel);cursor:pointer}
+.pickRow input{width:18px;height:18px;margin:0;flex:0 0 auto}
+.pickName{font-weight:900;font-size:13px;line-height:1.2}
+.pickMeta{font-size:11px;color:var(--muted);margin-top:2px}
+@media(max-width:520px){.modePill{min-width:62px;font-size:12px;padding:0 8px}.branchToggle{right:-10px;width:20px;height:20px;font-size:12px}.edgeToggle{width:18px;height:18px;font-size:10px}.sibToggle{width:16px;height:16px;font-size:11px}.sibToggle.left{left:-6px}.sibToggle.right{right:-6px}}
+
+.side{
+  background:var(--panel);
+  border-left:1px solid var(--line);
+  padding:16px;
+  overflow:auto;
+}
+.side.closed{display:none;}
+.side h2{margin:0 0 10px;font-size:18px}
+.detailTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.detailTop h2{font-size:15px;margin:0}
+.detailControls{display:flex;align-items:center;gap:8px}
+.detailTop .detailControls{display:flex;align-items:center;gap:8px}
+.closeDetail{min-width:92px;height:38px;border-radius:14px;border:1px solid var(--line);background:var(--panel);font-weight:900;cursor:pointer;padding:0 12px;color:var(--text)}
+
+body.detailMode .topbar .themeBtn{display:none!important}
+.side .themeBtn{display:none!important}
+.detailControls{justify-content:flex-end}
+
+.card{border:1px solid var(--line);border-radius:16px;padding:11px;background:rgba(255,255,255,.02);margin-bottom:10px}
+.cardName{font-size:16px;font-weight:900;line-height:1.2}
+.infoList{display:grid;gap:6px;margin-top:8px}
+.infoItem{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:12px;padding:7px 9px;color:var(--muted);font-size:12px}
+.infoItem b{color:var(--text)}
+.relList{display:grid;gap:6px;margin-top:8px}
+.relItem{border:1px solid var(--line);border-radius:12px;padding:6px 9px;cursor:pointer;background:var(--panel);font-size:12px;line-height:1.2}
+.relItem:hover{border-color:var(--green)}
+.relRole{font-size:10px;color:var(--muted);font-weight:800}
+.relName{font-weight:900;margin-top:1px;font-size:13px}
+.emptyRel{color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:8px 10px;font-size:12px}
+.actionCard{position:sticky;bottom:0;background:var(--panel);z-index:4;box-shadow:0 -12px 24px rgba(0,0,0,.04)}
+.row{margin-top:8px;color:var(--muted);line-height:1.55}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.actions .btn{height:38px;font-size:13px}
+.actions .wide{grid-column:1 / -1}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.38);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:900;
+}
+.modalBox{
+  width:min(380px,100%);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.modalTitle{font-size:22px;font-weight:900;margin-bottom:14px}
+.modalActions{display:flex;gap:10px;margin-top:8px}
+.modalActions .btn{flex:1}
+.choice{display:grid;gap:10px}
+.choice .btn{height:56px}
+@media(max-width:820px){
+  .brand{display:none}
+  .topbar{gap:8px;padding:6px 8px}
+  .searchWrap input{height:40px;font-size:14px}
+  .menuPanel{position:fixed;right:10px;top:60px;width:min(260px,calc(100vw - 20px))}
+  .main{display:block}
+  .canvas{height:calc(100vh - 56px)}
+  .side{
+    position:fixed;
+    inset:0;
+    width:auto;
+    max-height:none;
+    height:100vh;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    z-index:850;
+    padding:14px;
+  }
+  .side.closed{display:none}
+  .node{width:150px}
+  .detailTop{position:sticky;top:0;background:var(--panel);z-index:5;padding:4px 0 10px}
+  .detailTop h2{font-size:14px}
+  .closeDetail{height:36px;border-radius:13px}
+  .closeDetail{min-width:86px}
+  .cardName{font-size:15px}
+  .infoItem{font-size:11.5px;padding:6px 8px}
+  .relItem{font-size:11.5px;padding:6px 8px}
+  .relName{font-size:12.5px}
+  .actions .btn{height:36px;font-size:12.5px}
+}
+
+]]></b:skin>
+</head>
+<body>
+<b:section class='hidden-section' id='hidden-section' showaddelement='false'/>
+
+<div id='app'>
+  <div class='login'>
+    <div class='loginBox'>
+      <div class='loginTitle'>Login</div>
+      <input autocomplete='username' id='loginUser' placeholder='email'/>
+      <input autocomplete='current-password' id='loginPass' placeholder='password' type='password'/>
+      <button class='btn' id='loginBtn' style='width:100%' type='button'>Masuk</button>
+      <div class='msg' id='msg'>Memuat script...</div>
+    </div>
+  </div>
+</div>
+
+
+<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js' type='text/javascript'></script>
+<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js' type='text/javascript'></script>
+<script src='https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js' type='text/javascript'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js' type='text/javascript'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js' type='text/javascript'></script>
+
+<script type='text/javascript'>
+//<![CDATA[
+(function(){
+  var firebaseConfig = {
+    apiKey: "AIzaSyB7pKqyr7s3mhytmRZ0a-n_N1pTEYdWhcY",
+    authDomain: "aczarsilsila.firebaseapp.com",
+    projectId: "aczarsilsila",
+    storageBucket: "aczarsilsila.firebasestorage.app",
+    messagingSenderId: "462341211530",
+    appId: "1:462341211530:web:8fea8f861a8d7960cdf473"
+  };
+
+
+  var appEl = document.getElementById("app");
+  var auth = null;
+  var db = null;
+  var col = null;
+  var unsubscribe = null;
+  var members = [];
+  var selectedId = "";
+  var lastTapId = "";
+  var lastTapTime = 0;
+  var nodePos = {};
+  var currentGroupInfo = null;
+  var scale = 1;
+  var panX = 80;
+  var panY = 70;
+  var pointers = {};
+  var pointerCount = 0;
+  var drag = null;
+  var pinch = null;
+  var CACHE_KEY = "aczar_silsilah_members_v1";
+  var CACHE_TIME_KEY = CACHE_KEY + "_time";
+  var cacheDirty = false;
+  var viewMode = "focus";
+  var focusedId = "";
+  var expandedBranches = {};
+  var collapsedBranches = {};
+  var hiddenBranches = {};
+  var pickedIds = {};
+
+  function $(id){ return document.getElementById(id); }
+
+  function showMsg(text){
+    var el = $("msg");
+    if(el){ el.textContent = text || ""; }
+  }
+
+  function escapeHtml(value){
+    return String(value || "").replace(/[&<>'"]/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c];
+    });
+  }
+
+  function normalizeEmail(value){
+    return String(value || "").trim();
+  }
+
+  function timestamp(){
+    return firebase.firestore.FieldValue.serverTimestamp();
+  }
+
+  function syncThemeButtons(){
+    document.querySelectorAll(".themeBtn").forEach(function(btn){
+      var icon = btn.querySelector && btn.querySelector(".menuIcon");
+      if(icon){ icon.textContent = document.body.classList.contains("dark") ? "☀" : "☾"; }
+      else{ btn.textContent = document.body.classList.contains("dark") ? "☀" : "☾"; }
+    });
+  }
+
+  function initTheme(){
+    document.addEventListener("click", function(e){
+      var btn = e.target.closest && e.target.closest(".themeBtn");
+      if(!btn){ return; }
+      e.preventDefault();
+      e.stopPropagation();
+      document.body.classList.toggle("dark");
+      syncThemeButtons();
+    }, true);
+  }
+
+  function initFirebase(){
+    try{
+      initTheme();
+
+      if(!window.firebase){
+        showMsg("Firebase CDN tidak termuat. Cek internet atau ekstensi browser.");
+        return;
+      }
+
+      if(!firebase.apps.length){ firebase.initializeApp(firebaseConfig); }
+
+      auth = firebase.auth();
+      db = firebase.firestore();
+      col = db.collection("family_members");
+
+      window.JK_LOGIN_READY = true;
+      bindLoginButton();
+      showMsg("");
+
+      auth.onAuthStateChanged(function(user){
+        if(!user){
+          if(unsubscribe){ unsubscribe(); unsubscribe = null; }
+          renderLogin();
+          return;
+        }
+
+        CACHE_KEY = "aczar_silsilah_members_v1_" + user.uid;
+        CACHE_TIME_KEY = CACHE_KEY + "_time";
+        renderDashboard();
+      });
+    }catch(err){
+      showMsg("Error awal: " + err.message);
+    }
+  }
+
+  function bindLoginButton(){
+    var btn = $("loginBtn");
+    if(btn){
+      btn.onclick = login;
+    }
+
+    var pass = $("loginPass");
+    if(pass){
+      pass.onkeydown = function(e){
+        if(e.key === "Enter"){ login(); }
+      };
+    }
+  }
+
+  function renderLogin(){
+    appEl.innerHTML = "" +
+      "<div class='login'>" +
+        "<div class='loginBox'>" +
+          "<div class='loginTitle'>Login</div>" +
+          "<input autocomplete='username' id='loginUser' placeholder='email'/>" +
+          "<input autocomplete='current-password' id='loginPass' placeholder='password' type='password'/>" +
+          "<button class='btn' id='loginBtn' style='width:100%' type='button'>Masuk</button>" +
+          "<div class='msg' id='msg'></div>" +
+        "</div>" +
+      "</div>";
+    bindLoginButton();
+  }
+
+  function login(){
+    if(!auth){
+      showMsg("Script belum siap. Refresh halaman sekali.");
+      return;
+    }
+
+    var userInput = $("loginUser").value;
+    var passInput = $("loginPass").value;
+    var email = normalizeEmail(userInput);
+
+    if(!email || !passInput){
+      showMsg("Isi email dan password.");
+      return;
+    }
+
+    showMsg("Masuk...");
+
+    auth.signInWithEmailAndPassword(email, passInput)
+      .catch(function(err){
+        showMsg("Gagal login: " + err.code + " - " + err.message);
+      });
+  }
+
+
+  function closeMenu(){
+    var panel = $("menuPanel");
+    if(panel){ panel.classList.add("hide"); }
+  }
+
+  function bindTopMenu(){
+    var menuBtn = $("menuBtn");
+    var panel = $("menuPanel");
+    if(menuBtn && panel){
+      menuBtn.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        panel.classList.toggle("hide");
+      };
+    }
+    document.addEventListener("click", function(e){
+      if(!panel || panel.classList.contains("hide")){ return; }
+      if(e.target.closest && e.target.closest(".menuWrap")){ return; }
+      closeMenu();
+    }, { once:false });
+
+    if($("logoutBtn")){ $("logoutBtn").onclick = function(){ closeMenu(); auth.signOut(); }; }
+    if($("syncBtn")){ $("syncBtn").onclick = function(){ closeMenu(); syncFromFirebaseOnce(true); }; }
+    if($("exportBtn")){ $("exportBtn").onclick = function(){ closeMenu(); exportBackup(); }; }
+    if($("exportPngBtn")){ $("exportPngBtn").onclick = function(){ closeMenu(); exportTreePngHD(); }; }
+    if($("exportPdfBtn")){ $("exportPdfBtn").onclick = function(){ closeMenu(); exportPdfArchive(); }; }
+    if($("importBtn")){ $("importBtn").onclick = function(){ closeMenu(); var f=$("importFile"); if(f){ f.value=""; f.click(); } }; }
+    if($("importFile")){ $("importFile").onchange = function(){ if(this.files && this.files[0]){ importBackupFile(this.files[0]); } }; }
+    if($("clearCacheBtn")){ $("clearCacheBtn").onclick = function(){ closeMenu(); clearLocalCache(); }; }
+    if($("modeFocusBtn")){ $("modeFocusBtn").onclick = function(){ closeMenu(); setModeFocus(selectedId || focusedId || (members[0] && members[0].id)); }; }
+    if($("modeEditorBtn")){ $("modeEditorBtn").onclick = function(){ closeMenu(); setModeEditor(selectedId || focusedId || (members[0] && members[0].id)); }; }
+    if($("resetBranchesBtn")){ $("resetBranchesBtn").onclick = function(){ closeMenu(); hiddenBranches = {}; collapsedBranches = {}; expandedBranches = {}; drawTree(); }; }
+    if($("modeAllBtn")){ $("modeAllBtn").onclick = function(){ closeMenu(); setModeAll(); }; }
+    if($("modePickBtn")){ $("modePickBtn").onclick = function(){ closeMenu(); openPickModeModal(); }; }
+    if($("modePill")){ $("modePill").onclick = function(){ openPickModeModal(); }; }
+  }
+
+
+  function updateModePill(){
+    var pill = $("modePill");
+    if(!pill){ return; }
+    pill.textContent = viewMode === "all" ? "Semua" : (viewMode === "pick" ? "Pilihan" : (viewMode === "editor" ? "Editor" : "Fokus"));
+  }
+
+  function setModeFocus(id){
+    viewMode = "focus";
+    // Mode Fokus harus selalu bersih dan lengkap: buka semua cabang yang sempat ditutup di Editor.
+    hiddenBranches = {};
+    collapsedBranches = {};
+    expandedBranches = {};
+    if(id){ selectedId = id; focusedId = id; }
+    else if(!focusedId && members[0]){ selectedId = focusedId = members[0].id; }
+    updateModePill();
+    drawTree();
+    if(focusedId){ setTimeout(function(){ focusNode(focusedId); }, 30); }
+  }
+
+  function setModeEditor(id){
+    viewMode = "editor";
+    if(id){ selectedId = id; focusedId = id; }
+    else if(!focusedId && members[0]){ selectedId = focusedId = members[0].id; }
+    updateModePill();
+    drawTree();
+    if(focusedId){ setTimeout(function(){ focusNode(focusedId); }, 30); }
+  }
+
+  function setModeAll(){
+    viewMode = "all";
+    updateModePill();
+    drawTree();
+    if(selectedId){ setTimeout(function(){ focusNode(selectedId); }, 30); }
+  }
+
+  function setModePick(){
+    viewMode = "pick";
+    updateModePill();
+    drawTree();
+    var first = Object.keys(pickedIds).filter(function(id){ return pickedIds[id]; })[0];
+    if(first){ selectedId = first; setTimeout(function(){ focusNode(first); }, 30); }
+  }
+
+  function openPickModeModal(){
+    var checked = Object.assign({}, pickedIds);
+    if(!Object.keys(checked).length && (selectedId || focusedId)){
+      checked[selectedId || focusedId] = true;
+    }
+    function rows(q){
+      var query = String(q || "").toLowerCase();
+      return members.filter(function(m){ return !query || String(m.name || "").toLowerCase().indexOf(query) !== -1; }).map(function(m){
+        return "<label class='pickRow'>" +
+          "<input type='checkbox' data-pick='" + m.id + "' " + (checked[m.id] ? "checked" : "") + "/>" +
+          "<div><div class='pickName'>" + escapeHtml(m.name) + "</div><div class='pickMeta'>" + escapeHtml(birthLine(m) || "-") + "</div></div>" +
+        "</label>";
+      }).join("") || "<div class='emptyRel'>Tidak ada nama.</div>";
+    }
+    openModal("" +
+      "<div class='modalTitle'>Mode Pilihan</div>" +
+      "<input id='pickSearch' placeholder='Cari nama...'/>" +
+      "<div class='pickList' id='pickList'>" + rows("") + "</div>" +
+      "<div class='modalActions'>" +
+        "<button class='btn ghost' id='pickCancel' type='button'>Batal</button>" +
+        "<button class='btn' id='pickApply' type='button'>Terapkan</button>" +
+      "</div>"
+    );
+    function bindPickRows(){
+      var list = $("pickList");
+      if(!list){ return; }
+      list.querySelectorAll("[data-pick]").forEach(function(cb){
+        cb.onchange = function(){ checked[cb.getAttribute("data-pick")] = cb.checked; };
+      });
+    }
+    bindPickRows();
+    var ps = $("pickSearch");
+    if(ps){
+      ps.oninput = function(){
+        var list = $("pickList");
+        list.innerHTML = rows(ps.value);
+        bindPickRows();
+      };
+    }
+    $("pickCancel").onclick = closeModal;
+    $("pickApply").onclick = function(){
+      pickedIds = {};
+      Object.keys(checked).forEach(function(id){ if(checked[id]){ pickedIds[id] = true; } });
+      if(!Object.keys(pickedIds).length){ alert("Pilih minimal 1 nama."); return; }
+      closeModal();
+      setModePick();
+    };
+  }
+
+  function backupPayload(){
+    return {
+      app:"Aczar Silsilah",
+      version:1,
+      exportedAt:new Date().toISOString(),
+      members:members.map(function(m){
+        var x = Object.assign({}, m);
+        delete x.createdAt;
+        delete x.updatedAt;
+        return x;
+      })
+    };
+  }
+
+  function exportBackup(){
+    try{
+      var json = JSON.stringify(backupPayload(), null, 2);
+      var blob = new Blob([json], {type:"application/json"});
+      var a = document.createElement("a");
+      var date = new Date().toISOString().slice(0,10);
+      a.href = URL.createObjectURL(blob);
+      a.download = "backup-silsilah-aczar-" + date + ".json";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    }catch(err){ alert("Gagal export: " + err.message); }
+  }
+
+  function showExportBusy(text){
+    var old = $("exportBusy");
+    if(old){ old.remove(); }
+    var box = document.createElement("div");
+    box.className = "exportBusy";
+    box.id = "exportBusy";
+    box.innerHTML = "<div>" + escapeHtml(text || "Menyiapkan export...") + "</div>";
+    document.body.appendChild(box);
+  }
+
+  function hideExportBusy(){
+    var box = $("exportBusy");
+    if(box){ box.remove(); }
+  }
+
+  function exportFileName(ext){
+    return "silsilah-aczar-" + new Date().toISOString().slice(0,10) + "." + ext;
+  }
+
+  function currentTreeSize(){
+    var lines = $("lines");
+    var w = lines ? parseFloat(lines.getAttribute("width")) : 1600;
+    var h = lines ? parseFloat(lines.getAttribute("height")) : 1000;
+    return { w: Math.max(900, w || 900), h: Math.max(650, h || 650) };
+  }
+
+  function captureTreeCanvas(scaleValue){
+    return new Promise(function(resolve, reject){
+      var stage = $("stage");
+      if(!stage){ reject(new Error("Canvas tree tidak ditemukan.")); return; }
+      if(!window.html2canvas){ reject(new Error("Library export gambar belum termuat. Coba refresh halaman.")); return; }
+      drawTree();
+      setTimeout(function(){
+        var size = currentTreeSize();
+        var oldTransform = stage.style.transform;
+        var oldWidth = stage.style.width;
+        var oldHeight = stage.style.height;
+        stage.style.transform = "none";
+        stage.style.width = size.w + "px";
+        stage.style.height = size.h + "px";
+        html2canvas(stage, {
+          backgroundColor: getComputedStyle(document.body).getPropertyValue("--bg").trim() || "#ffffff",
+          scale: scaleValue || 2,
+          width: size.w,
+          height: size.h,
+          useCORS: true,
+          logging: false
+        }).then(function(canvas){
+          stage.style.transform = oldTransform;
+          stage.style.width = oldWidth;
+          stage.style.height = oldHeight;
+          resolve(canvas);
+        }).catch(function(err){
+          stage.style.transform = oldTransform;
+          stage.style.width = oldWidth;
+          stage.style.height = oldHeight;
+          reject(err);
+        });
+      }, 120);
+    });
+  }
+
+  function exportTreePngHD(){
+    showExportBusy("Membuat PNG HD...");
+    captureTreeCanvas(3).then(function(canvas){
+      var a = document.createElement("a");
+      a.download = exportFileName("png");
+      a.href = canvas.toDataURL("image/png");
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      hideExportBusy();
+    }).catch(function(err){
+      hideExportBusy();
+      alert("Gagal export PNG: " + err.message);
+    });
+  }
+
+  function memberSummaryLines(m){
+    if(!m){ return []; }
+    var children = getChildren(m.id).map(function(c){ return c.name; }).join(", ") || "-";
+    var lines = [
+      "Nama: " + (m.name || "-"),
+      "Jenis kelamin: " + (m.gender || "-"),
+      "Lahir: " + ([m.birthPlace, m.birthDate].filter(Boolean).join(", ") || "-"),
+      "Ayah: " + memberName(m.fatherId),
+      "Ibu: " + memberName(m.motherId),
+      "Anak: " + children,
+      "Pekerjaan: " + (m.job || "-"),
+      "Alamat: " + (m.address || "-"),
+      "Status: " + (m.lifeStatus || "-"),
+      "Tanggal wafat: " + (m.deathDate || "-"),
+      "Link galeri: " + (m.galleryLink || "-"),
+      "Sumber info: " + (m.sourceInfo || "-")
+    ];
+    if(m.story){ lines.push("Catatan: " + m.story); }
+    return lines;
+  }
+
+  function exportPdfArchive(){
+    if(!window.jspdf || !window.jspdf.jsPDF){
+      alert("Library PDF belum termuat. Coba refresh halaman.");
+      return;
+    }
+    showExportBusy("Membuat PDF...");
+    captureTreeCanvas(2).then(function(canvas){
+      var jsPDF = window.jspdf.jsPDF;
+      var pdf = new jsPDF({orientation:"landscape", unit:"mm", format:"a4"});
+      var pageW = pdf.internal.pageSize.getWidth();
+      var pageH = pdf.internal.pageSize.getHeight();
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(16);
+      pdf.text("Aczar - Silsilah Keluarga", 12, 12);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      pdf.text("Export: " + new Date().toLocaleString("id-ID"), 12, 18);
+      var img = canvas.toDataURL("image/png");
+      var margin = 10;
+      var maxW = pageW - margin*2;
+      var maxH = pageH - 28;
+      var ratio = Math.min(maxW / canvas.width, maxH / canvas.height);
+      var w = canvas.width * ratio;
+      var h = canvas.height * ratio;
+      pdf.addImage(img, "PNG", (pageW-w)/2, 24, w, h);
+
+      var list = getRenderMembers();
+      if(!list.length){ list = members.slice(); }
+      list.sort(function(a,b){ return (a.name || "").localeCompare(b.name || ""); });
+      pdf.addPage("a4", "portrait");
+      var pw = pdf.internal.pageSize.getWidth();
+      var ph = pdf.internal.pageSize.getHeight();
+      var x = 14;
+      var y = 16;
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(15);
+      pdf.text("Detail Anggota", x, y);
+      y += 8;
+      pdf.setFontSize(10);
+      list.forEach(function(m, idx){
+        var missing = missingFields(m);
+        var lines = memberSummaryLines(m);
+        if(missing.length){ lines.splice(1, 0, "Data belum lengkap: " + missing.join(", ")); }
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(11);
+        if(y > ph - 25){ pdf.addPage("a4", "portrait"); y = 16; }
+        pdf.text((idx+1) + ". " + (m.name || "Tanpa nama"), x, y);
+        y += 6;
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9);
+        lines.slice(1).forEach(function(line){
+          var split = pdf.splitTextToSize(line, pw - 28);
+          split.forEach(function(t){
+            if(y > ph - 14){ pdf.addPage("a4", "portrait"); y = 16; }
+            pdf.text(t, x, y);
+            y += 5;
+          });
+        });
+        y += 5;
+      });
+      pdf.save(exportFileName("pdf"));
+      hideExportBusy();
+    }).catch(function(err){
+      hideExportBusy();
+      alert("Gagal export PDF: " + err.message);
+    });
+  }
+
+  function missingFields(m){
+    var miss = [];
+    if(!m.name){ miss.push("nama"); }
+    if(!m.gender){ miss.push("jenis kelamin"); }
+    if(!m.birthPlace){ miss.push("tempat lahir"); }
+    if(!m.birthDate){ miss.push("tanggal lahir"); }
+    return miss;
+  }
+
+  function copySummary(id){
+    var m = findMember(id);
+    if(!m){ return; }
+    var text = memberSummaryLines(m).join("\n");
+    function ok(){ var el = $("copyStatus"); if(el){ el.textContent = "Ringkasan disalin."; setTimeout(function(){ if(el){ el.textContent = ""; } }, 1800); } }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok).catch(function(){ window.prompt("Salin ringkasan:", text); });
+    }else{
+      window.prompt("Salin ringkasan:", text);
+    }
+  }
+
+  function normalizeImportedMembers(raw){
+    var arr = [];
+    if(Array.isArray(raw)){ arr = raw; }
+    else if(raw && Array.isArray(raw.members)){ arr = raw.members; }
+    else{ throw new Error("Format backup tidak dikenali."); }
+    return arr.filter(function(m){ return m && m.id && m.name; }).map(function(m){
+      return {
+        id:String(m.id),
+        name:String(m.name || ""),
+        birthPlace:String(m.birthPlace || ""),
+        birthDate:String(m.birthDate || ""),
+        gender:String(m.gender || ""),
+        fatherId:String(m.fatherId || ""),
+        motherId:String(m.motherId || ""),
+        job:String(m.job || ""),
+        address:String(m.address || ""),
+        lifeStatus:String(m.lifeStatus || ""),
+        deathDate:String(m.deathDate || ""),
+        galleryLink:String(m.galleryLink || ""),
+        story:String(m.story || ""),
+        sourceInfo:String(m.sourceInfo || "")
+      };
+    });
+  }
+
+  function importBackupFile(file){
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var raw = JSON.parse(reader.result);
+        var imported = normalizeImportedMembers(raw);
+        if(!imported.length){ alert("Backup kosong atau tidak valid."); return; }
+        var replace = confirm("Import " + imported.length + " data?\n\nOK = ganti data lama dengan backup.\nCancel = batalkan import.");
+        if(!replace){ return; }
+        var batch = db.batch();
+        members.forEach(function(m){ if(m.id){ batch.delete(col.doc(m.id)); } });
+        imported.forEach(function(m){
+          var id = m.id;
+          var data = Object.assign({}, m, { updatedAt: timestamp(), importedAt: timestamp() });
+          delete data.id;
+          batch.set(col.doc(id), data);
+        });
+        batch.commit().then(function(){
+          members = imported;
+          selectedId = imported[0] ? imported[0].id : "";
+          focusedId = selectedId;
+          viewMode = "focus";
+          saveCache();
+          drawTree();
+          hideDetail();
+          alert("Import selesai.");
+        }).catch(function(err){ alert("Gagal import: " + err.message); });
+      }catch(err){ alert("Gagal baca backup: " + err.message); }
+    };
+    reader.readAsText(file);
+  }
+
+  function clearLocalCache(){
+    try{
+      localStorage.removeItem(CACHE_KEY);
+      localStorage.removeItem(CACHE_TIME_KEY);
+    }catch(e){}
+    syncFromFirebaseOnce(true);
+  }
+
+  function renderDashboard(){
+    appEl.innerHTML = "" +
+      "<div class='topbar'>" +
+        "<div class='brand'>Aczar</div>" +
+        "<div class='searchWrap'>" +
+          "<input id='searchInput' placeholder='Cari nama...'/>" +
+          "<div class='searchList hide' id='searchList'></div>" +
+        "</div>" +
+        "<button class='modePill' id='modePill' type='button'>Fokus</button>" +
+        "<div class='menuWrap'>" +
+          "<button class='menuBtn' id='menuBtn' type='button' title='Menu'>☰</button>" +
+          "<div class='menuPanel hide' id='menuPanel'>" +
+            "<button class='menuItem' id='modeFocusBtn' type='button'><span class='menuIcon'>◎</span><span class='menuText'>Mode Fokus</span></button>" +
+            "<button class='menuItem' id='modeEditorBtn' type='button'><span class='menuIcon'>✎</span><span class='menuText'>Mode Editor Stabil</span></button>" +
+            "<button class='menuItem' id='resetBranchesBtn' type='button'><span class='menuIcon'>↔</span><span class='menuText'>Buka Semua Cabang</span></button>" +
+            "<button class='menuItem' id='modePickBtn' type='button'><span class='menuIcon'>☑</span><span class='menuText'>Mode Pilihan</span></button>" +
+            "<button class='menuItem' id='modeAllBtn' type='button'><span class='menuIcon'>□</span><span class='menuText'>Mode Semua</span></button>" +
+            "<button class='menuItem' id='syncBtn' type='button'><span class='menuIcon'>↻</span><span class='menuText'>Sinkron</span></button>" +
+            "<button class='menuItem' id='exportBtn' type='button'><span class='menuIcon'>⬇</span><span class='menuText'>Export Backup</span></button><button class='menuItem' id='exportPngBtn' type='button'><span class='menuIcon'>▣</span><span class='menuText'>Export PNG HD</span></button><button class='menuItem' id='exportPdfBtn' type='button'><span class='menuIcon'>▤</span><span class='menuText'>Export PDF</span></button>" +
+            "<button class='menuItem' id='importBtn' type='button'><span class='menuIcon'>⬆</span><span class='menuText'>Import Backup</span></button>" +
+            "<button class='menuItem' id='clearCacheBtn' type='button'><span class='menuIcon'>🧹</span><span class='menuText'>Bersihkan Cache</span></button>" +
+            "<button class='menuItem themeBtn' type='button'><span class='menuIcon'>☾</span><span class='menuText'>Gelap / Terang</span></button>" +
+            "<button class='menuItem danger' id='logoutBtn' type='button'><span class='menuIcon'>⏻</span><span class='menuText'>Keluar</span></button>" +
+          "</div>" +
+          "<input id='importFile' type='file' accept='application/json,.json' class='hide'/>" +
+        "</div>" +
+      "</div>" +
+      "<div class='main' id='main'>" +
+        "<div class='canvas' id='canvas'>" +
+          "<div class='stage' id='stage'>" +
+            "<svg class='lines' id='lines'></svg>" +
+            "<div class='nodes' id='nodes'></div>" +
+          "</div>" +
+          "<button class='emptyPlus' id='emptyPlus' type='button'>+</button>" +
+        "</div>" +
+        "<aside class='side closed' id='side'>" +
+          "<div id='detail'></div>" +
+        "</aside>" +
+      "</div>";
+
+    syncThemeButtons();
+    bindTopMenu();
+    updateModePill();
+
+    // Tangkap klik tombol + langsung dari document agar tidak ketahan canvas drag.
+    document.addEventListener("click", function(e){
+      var plus = e.target.closest && e.target.closest(".nodePlus");
+      if(plus){
+        e.preventDefault();
+        e.stopPropagation();
+        var id = plus.getAttribute("data-id");
+        var action = plus.getAttribute("data-act");
+        if(action === "parent"){ chooseParentType(id); }
+        if(action === "child"){ chooseChildType(id); }
+        return false;
+      }
+      var edgeBtn = e.target.closest && e.target.closest(".edgeToggle");
+      if(edgeBtn){
+        e.preventDefault();
+        e.stopPropagation();
+        toggleEditorBranch(edgeBtn.getAttribute("data-child"));
+        return false;
+      }
+      var sibBtn = e.target.closest && e.target.closest(".sibToggle");
+      if(sibBtn){
+        e.preventDefault();
+        e.stopPropagation();
+        var sid = sibBtn.getAttribute("data-id");
+        var act = sibBtn.getAttribute("data-act");
+        if(act === "hideSibling"){ hideOneSibling(sid, sibBtn.getAttribute("data-side")); }
+        if(act === "showSibling"){ showOneSibling(sid, sibBtn.getAttribute("data-side")); }
+        return false;
+      }
+      var relBtn = e.target.closest && e.target.closest(".relationBox");
+      if(relBtn){
+        e.preventDefault();
+        e.stopPropagation();
+        var rel = relBtn.getAttribute("data-rel");
+        if(rel === "none"){ activeRelation = null; drawTree(); return false; }
+        var current = activeRelation;
+        activeRelation = null;
+        if(current && current.type === "parent"){
+          openPersonModal({ type:"newParent", childId:current.id, rel:rel });
+        }else if(current){
+          openPersonModal({ type:"newChild", parentId:current.id, rel:rel });
+        }
+        return false;
+      }
+    }, true);
+    var ep = $("emptyPlus");
+    ep.onpointerdown = function(e){
+      e.stopPropagation();
+    };
+    ep.onpointerup = function(e){
+      e.stopPropagation();
+    };
+    ep.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      openPersonModal({ type:"root" });
+    };
+
+    setupCanvas();
+    setupSearch();
+    loadMembersCached();
+  }
+
+  function saveCache(){
+    try{
+      localStorage.setItem(CACHE_KEY, JSON.stringify(members || []));
+      localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+      cacheDirty = false;
+    }catch(e){
+      console.warn("Cache gagal disimpan", e);
+    }
+  }
+
+  function loadCache(){
+    try{
+      var raw = localStorage.getItem(CACHE_KEY);
+      if(!raw){ return false; }
+      members = JSON.parse(raw) || [];
+      ensureFocus();
+      drawTree();
+      return true;
+    }catch(e){
+      console.warn("Cache gagal dibaca", e);
+      return false;
+    }
+  }
+
+  function setMembersLocal(next){
+    members = next || [];
+    ensureFocus();
+    saveCache();
+    drawTree();
+    if(selectedId && findMember(selectedId)){ showDetail(selectedId); }
+  }
+
+  function loadMembersCached(){
+    if(unsubscribe){ unsubscribe(); unsubscribe = null; }
+    var hasCache = loadCache();
+    if(!hasCache){
+      syncFromFirebaseOnce(false);
+    }
+  }
+
+  function syncFromFirebaseOnce(showAlert){
+    var btn = $("syncBtn");
+    if(btn){ btn.disabled = true; btn.textContent = "..."; }
+
+    col.get().then(function(snapshot){
+      var fresh = snapshot.docs.map(function(doc){
+        var data = doc.data();
+        data.id = doc.id;
+        return data;
+      });
+      members = fresh;
+      ensureFocus();
+      saveCache();
+      drawTree();
+      if(selectedId && findMember(selectedId)){ showDetail(selectedId); }
+      if(showAlert){ alert("Data sudah disinkronkan dari Firebase."); }
+    }).catch(function(err){
+      if(showAlert){ alert("Gagal sinkron: " + err.message); }
+      else if(!members.length){ alert("Firestore error: " + err.message); }
+    }).finally(function(){
+      if(btn){ btn.disabled = false; btn.textContent = "Sinkron"; }
+    });
+  }
+
+  function getChildren(parentId){
+    return members.filter(function(m){
+      return m.fatherId === parentId || m.motherId === parentId;
+    });
+  }
+
+  function getRoots(){
+    var roots = members.filter(function(m){ return !m.fatherId && !m.motherId; });
+    if(!roots.length && members.length){ roots = [members[0]]; }
+    return roots;
+  }
+
+  function findMember(id){
+    return members.find(function(m){ return m.id === id; });
+  }
+
+  function memberName(id){
+    var m = findMember(id);
+    return m ? m.name : "-";
+  }
+
+  function birthLine(m){
+    var place = (m.birthPlace || "").trim();
+    var date = (m.birthDate || "").trim();
+    if(place && date){ return place + ", " + date; }
+    return place || date || "";
+  }
+
+
+  function ensureFocus(){
+    if(!members.length){ return; }
+    if(!focusedId || !findMember(focusedId)){ focusedId = selectedId && findMember(selectedId) ? selectedId : members[0].id; }
+    if(!selectedId || !findMember(selectedId)){ selectedId = focusedId; }
+  }
+
+  function markAncestors(id, set){
+    var m = findMember(id);
+    if(!m || set[id]){ return; }
+    set[id] = true;
+    if(m.motherId){ markAncestors(m.motherId, set); }
+    if(m.fatherId){ markAncestors(m.fatherId, set); }
+  }
+
+  function markDescendants(id, set){
+    if(!id){ return; }
+    set[id] = true;
+    getChildren(id).forEach(function(c){ markDescendants(c.id, set); });
+  }
+
+  // Mode Fokus murni:
+  // hanya garis aktif yang tampil:
+  // - orang yang dipilih
+  // - jalur leluhur ke atas
+  // - keturunan ke bawah
+  // Tidak menampilkan saudara/paman/bibi/cabang samping/co-parent lain.
+  function markFocusFamily(id, set){
+    if(!id){ return; }
+    markAncestors(id, set);
+    markDescendants(id, set);
+  }
+
+  function markDirectChildren(id, set){
+    if(!id){ return; }
+    getChildren(id).forEach(function(c){ set[c.id] = true; });
+  }
+
+  function removeDescendantsFromSet(id, set){
+    getChildren(id).forEach(function(c){
+      delete set[c.id];
+      removeDescendantsFromSet(c.id, set);
+    });
+  }
+
+  function getVisibleSet(){
+    var set = {};
+    if(viewMode === "all" || viewMode === "editor"){
+      members.forEach(function(m){ set[m.id] = true; });
+    }else if(viewMode === "pick"){
+      Object.keys(pickedIds).forEach(function(id){
+        if(pickedIds[id] && findMember(id)){
+          markFocusFamily(id, set);
+        }
+      });
+      if(!Object.keys(set).length){
+        ensureFocus();
+        if(focusedId){ markFocusFamily(focusedId,set); }
+      }
+    }else{
+      // Mode Fokus bersih: selalu pakai orang yang sedang dipilih.
+      // Ini wajib supaya saat klik/search Achmad, ibu + nenek dari ibu ikut muncul,
+      // bukan tertahan fokus lama dari jalur ayah.
+      ensureFocus();
+      var baseId = (selectedId && findMember(selectedId)) ? selectedId : focusedId;
+      if(baseId){
+        focusedId = baseId;
+        markFocusFamily(baseId, set);
+      }
+    }
+
+    // Mode Editor stabil: data tetap ikut layout agar posisi tidak gonta-ganti.
+    // Cabang yang ditutup hanya disembunyikan secara visual saat drawTree.
+    return set;
+  }
+
+  function getRenderMembers(){
+    var set = getVisibleSet();
+    return members.filter(function(m){ return !!set[m.id]; });
+  }
+
+  function getRenderChildren(parentId){
+    var set = getVisibleSet();
+    return getChildren(parentId).filter(function(c){ return !!set[c.id]; });
+  }
+
+  function siblingKey(id){
+    return "sib:" + id;
+  }
+
+  function siblingIds(id){
+    var m = findMember(id);
+    if(!m){ return []; }
+    var map = {};
+    [m.motherId, m.fatherId].forEach(function(pid){
+      if(pid){
+        getChildren(pid).forEach(function(sib){
+          if(sib.id !== id){ map[sib.id] = true; }
+        });
+      }
+    });
+    return Object.keys(map);
+  }
+
+  function hasSiblingBranch(id){
+    return siblingIds(id).length > 0;
+  }
+
+  function branchIsOpen(id){
+    var key = siblingKey(id);
+    if(viewMode === "all"){
+      return !collapsedBranches[key];
+    }
+    return !!expandedBranches[key];
+  }
+
+  function hasToggleBranch(id){
+    return hasSiblingBranch(id);
+  }
+
+  function branchIsHidden(childId){
+    return !!hiddenBranches[childId];
+  }
+
+  function isHiddenByEditor(id){
+    if(viewMode !== "editor"){ return false; }
+    if(hiddenBranches[id]){ return true; }
+    var m = findMember(id);
+    if(!m){ return false; }
+    if(m.motherId && isHiddenByEditor(m.motherId)){ return true; }
+    if(m.fatherId && isHiddenByEditor(m.fatherId)){ return true; }
+    return false;
+  }
+
+  function toggleEditorBranch(childId){
+    if(!childId || viewMode !== "editor"){ return; }
+    if(hiddenBranches[childId]){ delete hiddenBranches[childId]; }
+    else{ hiddenBranches[childId] = true; }
+    drawTree();
+  }
+
+  function siblingSide(anchorId, siblingId){
+    var a = nodePos[anchorId];
+    var s = nodePos[siblingId];
+    if(a && s){ return s.x < a.x ? "left" : "right"; }
+    // Jika sibling sedang disembunyikan, pakai sisi yang disimpan saat ditutup.
+    if(hiddenBranches[siblingId] === "left" || hiddenBranches[siblingId] === "right"){ return hiddenBranches[siblingId]; }
+    return "right";
+  }
+
+  function hiddenSiblings(id, side){
+    return siblingIds(id).filter(function(sid){
+      if(!hiddenBranches[sid]){ return false; }
+      return side ? siblingSide(id, sid) === side : true;
+    });
+  }
+  function visibleSiblings(id, side){
+    return siblingIds(id).filter(function(sid){
+      if(hiddenBranches[sid]){ return false; }
+      return side ? siblingSide(id, sid) === side : true;
+    });
+  }
+  function sortByDistanceFrom(anchorId, arr){
+    var a = nodePos[anchorId];
+    return arr.sort(function(x,y){
+      var px=nodePos[x], py=nodePos[y];
+      if(a && px && py){ return Math.abs(px.x-a.x) - Math.abs(py.x-a.x); }
+      var an=(findMember(x)||{}).name||""; var bn=(findMember(y)||{}).name||"";
+      return String(an).localeCompare(String(bn));
+    });
+  }
+  function hideOneSibling(id, side){
+    if(viewMode !== "editor"){ return; }
+    var arr = sortByDistanceFrom(id, visibleSiblings(id, side));
+    if(arr.length){ hiddenBranches[arr[0]] = side || siblingSide(id, arr[0]); drawTree(); }
+  }
+  function showOneSibling(id, side){
+    if(viewMode !== "editor"){ return; }
+    var arr = hiddenSiblings(id, side).sort(function(a,b){
+      var an=(findMember(a)||{}).name||""; var bn=(findMember(b)||{}).name||"";
+      return String(an).localeCompare(String(bn));
+    });
+    if(arr.length){ delete hiddenBranches[arr[0]]; drawTree(); }
+  }
+
+  function addEdgeToggle(childId, x, y, closed){
+    if(viewMode !== "editor"){ return; }
+    var nodes = $("nodes");
+    if(!nodes){ return; }
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "edgeToggle " + (closed ? "open" : "close");
+    btn.setAttribute("data-child", childId);
+    btn.title = closed ? "Buka cabang ini" : "Tutup cabang ini";
+    btn.textContent = closed ? "+" : "−";
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+    btn.onpointerdown = function(e){ e.preventDefault(); e.stopPropagation(); };
+    btn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); toggleEditorBranch(childId); };
+    nodes.appendChild(btn);
+  }
+
+
+  function topVisibleRoots(renderMembers, visible){
+    var roots = renderMembers.filter(function(m){
+      return !(m.motherId && visible[m.motherId]) && !(m.fatherId && visible[m.fatherId]);
+    });
+    if(!roots.length && renderMembers.length){ roots = [renderMembers[0]]; }
+    roots.sort(function(a,b){ return String(a.name||"").localeCompare(String(b.name||"")); });
+    return roots;
+  }
+
+  function descendantsVisible(rootId, visible){
+    var set = {};
+    function walk(id){
+      if(!id || set[id] || !visible[id]){ return; }
+      set[id] = true;
+      getChildren(id).forEach(function(c){ if(visible[c.id]){ walk(c.id); } });
+    }
+    walk(rootId);
+    return set;
+  }
+
+  function primaryRootMap(renderMembers, visible){
+    var roots = topVisibleRoots(renderMembers, visible);
+    var groups = roots.map(function(r){ return { root:r, ids:descendantsVisible(r.id, visible) }; });
+    var map = {};
+    renderMembers.forEach(function(m){
+      var chosen = null;
+      for(var i=0;i<groups.length;i++){
+        if(groups[i].ids[m.id]){ chosen = groups[i].root.id; break; }
+      }
+      map[m.id] = chosen || (roots[0] && roots[0].id) || "main";
+    });
+    return { roots:roots, map:map, groups:groups };
+  }
+
+  function rootReachCount(rootId, visible){
+    var set = descendantsVisible(rootId, visible);
+    return Object.keys(set).length;
+  }
+
+  function strictRootMap(renderMembers, visible){
+    var roots = topVisibleRoots(renderMembers, visible);
+    roots.sort(function(a,b){
+      var an = String(a.name || "").toLowerCase();
+      var bn = String(b.name || "").toLowerCase();
+      if(an !== bn){ return an.localeCompare(bn); }
+      return String(a.id || "").localeCompare(String(b.id || ""));
+    });
+
+    var groups = roots.map(function(r){ return { root:r, ids:descendantsVisible(r.id, visible) }; });
+    var membership = {};
+    renderMembers.forEach(function(m){ membership[m.id] = []; });
+    groups.forEach(function(g){
+      Object.keys(g.ids).forEach(function(id){
+        if(!membership[id]){ membership[id] = []; }
+        membership[id].push(g.root.id);
+      });
+    });
+
+    var map = {};
+    renderMembers.forEach(function(m){
+      var arr = membership[m.id] || [];
+      // Untuk layout umum, orang yang hanya punya satu akar ikut blok akar itu.
+      // Orang yang menghubungkan dua jalur boleh di tengah, jadi map hanya fallback.
+      map[m.id] = arr[0] || (roots[0] && roots[0].id) || "main";
+    });
+    return { roots:roots, map:map, groups:groups, membership:membership };
+  }
+
+  function drawAncestorBlocks(nodes, renderMembers, visible){
+    if(viewMode !== "all" && viewMode !== "editor" && viewMode !== "pick"){ return; }
+    var info = strictRootMap(renderMembers, visible);
+    var colors = ["rgba(46,125,75,.105)","rgba(244,194,78,.135)","rgba(67,137,222,.105)","rgba(220,115,170,.105)","rgba(120,95,180,.100)"];
+
+    // Blok warna hanya penanda jalur leluhur paling atas.
+    // Orang yang tersambung ke dua leluhur (misalnya anak dari ayah/ibu beda jalur)
+    // tidak dipaksa masuk ke blok mana pun, sehingga boleh berada di tengah canvas.
+    info.roots.forEach(function(root, idx){
+      var ids = renderMembers.filter(function(m){
+        var mem = (info.membership && info.membership[m.id]) || [];
+        return mem.length === 1 && mem[0] === root.id && nodePos[m.id];
+      }).map(function(m){ return m.id; });
+      if(!ids.length && nodePos[root.id]){ ids = [root.id]; }
+      if(!ids.length){ return; }
+
+      var minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+      ids.forEach(function(id){
+        var p=nodePos[id];
+        minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x+150);
+        minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y+104);
+      });
+      minX -= 24; maxX += 24; minY -= 28; maxY += 34;
+      var box=document.createElement("div");
+      box.className="ancestorBlock";
+      box.style.left=minX+"px"; box.style.top=minY+"px";
+      box.style.width=Math.max(170,maxX-minX)+"px"; box.style.height=Math.max(140,maxY-minY)+"px";
+      box.style.background=colors[idx % colors.length];
+      nodes.appendChild(box);
+    });
+  }
+
+  function collectActiveIds(){
+    var active = {};
+    function mark(id){ if(id){ active[id] = true; } }
+    function up(id){
+      var m = findMember(id);
+      if(!m){ return; }
+      mark(id);
+      if(m.fatherId){ up(m.fatherId); }
+      if(m.motherId){ up(m.motherId); }
+    }
+    function down(id){
+      if(!id || active["down:" + id]){ return; }
+      active["down:" + id] = true;
+      mark(id);
+      getChildren(id).forEach(function(c){ down(c.id); });
+    }
+
+    // Mode Pilihan: semua orang yang dicentang harus punya jalur aktif
+    // sampai ke ujung leluhur dan turunannya, bukan cuma orang pertama.
+    // Layout Mode Pilihan memakai penataan stabil seperti Editor, tapi node yang tampil
+    // tetap hanya jalur aktif dari orang-orang yang dipilih.
+    if(viewMode === "pick"){
+      Object.keys(pickedIds).forEach(function(id){
+        if(pickedIds[id] && findMember(id)){
+          up(id);
+          down(id);
+        }
+      });
+      Object.keys(active).forEach(function(k){ if(k.indexOf("down:") === 0){ delete active[k]; } });
+      return active;
+    }
+
+    var baseId = (selectedId && findMember(selectedId)) ? selectedId : focusedId;
+    if(!baseId){ return active; }
+    up(baseId);
+    down(baseId);
+    Object.keys(active).forEach(function(k){ if(k.indexOf("down:") === 0){ delete active[k]; } });
+    return active;
+  }
+
+
+  function makePureFocusLayout(renderMembers){
+    nodePos = {};
+    ensureFocus();
+    var visible = {};
+    renderMembers.forEach(function(m){ visible[m.id] = true; });
+    var centerId = (selectedId && visible[selectedId]) ? selectedId : ((focusedId && visible[focusedId]) ? focusedId : (renderMembers[0] && renderMembers[0].id));
+    if(!centerId){ return; }
+    selectedId = centerId;
+    focusedId = centerId;
+
+    var W = window.innerWidth < 620 ? 154 : 178;
+    var H = window.innerWidth < 620 ? 122 : 134;
+    var CX = 520;
+    var minGap = window.innerWidth < 620 ? 168 : 205;
+
+    function ok(id){ return !!(id && visible[id] && findMember(id)); }
+    function put(id,x,y){
+      if(!ok(id)){ return; }
+      if(!nodePos[id]){ nodePos[id] = {x:x,y:y}; }
+      else{
+        nodePos[id].x = (nodePos[id].x * 0.55) + (x * 0.45);
+        nodePos[id].y = Math.min(nodePos[id].y, y);
+      }
+    }
+    function maxAncestorDepth(id, seen){
+      if(!ok(id) || seen[id]){ return 0; }
+      seen[id] = true;
+      var m = findMember(id);
+      var a = 0;
+      if(ok(m.motherId)){ a = Math.max(a, 1 + maxAncestorDepth(m.motherId, Object.assign({}, seen))); }
+      if(ok(m.fatherId)){ a = Math.max(a, 1 + maxAncestorDepth(m.fatherId, Object.assign({}, seen))); }
+      return a;
+    }
+
+    function placeParents(childId, childX, childY, depth){
+      if(!ok(childId) || depth > 20){ return; }
+      var child = findMember(childId);
+      var hasMother = ok(child.motherId);
+      var hasFather = ok(child.fatherId);
+      if(!hasMother && !hasFather){ return; }
+      var y = childY - H;
+      var sep = Math.max(minGap, 220 - depth * 6);
+      if(hasMother && hasFather){
+        var mx = childX - sep / 2;
+        var fx = childX + sep / 2;
+        put(child.motherId, mx, y);
+        put(child.fatherId, fx, y);
+        placeParents(child.motherId, mx, y, depth + 1);
+        placeParents(child.fatherId, fx, y, depth + 1);
+      }else if(hasMother){
+        put(child.motherId, childX, y);
+        placeParents(child.motherId, childX, y, depth + 1);
+      }else if(hasFather){
+        put(child.fatherId, childX, y);
+        placeParents(child.fatherId, childX, y, depth + 1);
+      }
+    }
+
+    function placeKids(parentId, parentX, parentY, depth){
+      if(!ok(parentId) || depth > 20){ return; }
+      var kids = getChildren(parentId).filter(function(c){ return ok(c.id); });
+      if(!kids.length){ return; }
+      kids.sort(function(a,b){ return String(a.name||'').localeCompare(String(b.name||'')); });
+      var gap = Math.max(minGap, 210 - depth * 4);
+      var start = parentX - ((kids.length - 1) * gap) / 2;
+      kids.forEach(function(k,i){
+        var x = start + i * gap;
+        var y = parentY + H;
+        put(k.id, x, y);
+        placeKids(k.id, x, y, depth + 1);
+      });
+    }
+
+    var upDepth = maxAncestorDepth(centerId, {});
+    var centerY = 70 + upDepth * H;
+    put(centerId, CX, centerY);
+    placeParents(centerId, CX, centerY, 1);
+    placeKids(centerId, CX, centerY, 1);
+
+    // Rapikan per level tanpa mengubah aturan ibu kiri dan ayah kanan.
+    function settle(){
+      var levels = {};
+      Object.keys(nodePos).forEach(function(id){
+        var key = Math.round(nodePos[id].y / H);
+        if(!levels[key]){ levels[key] = []; }
+        levels[key].push(id);
+      });
+      Object.keys(levels).forEach(function(key){
+        var arr = levels[key].sort(function(a,b){ return nodePos[a].x - nodePos[b].x; });
+        for(var i=1;i<arr.length;i++){
+          var prev = nodePos[arr[i-1]], cur = nodePos[arr[i]];
+          if(cur.x - prev.x < minGap){ cur.x = prev.x + minGap; }
+        }
+      });
+    }
+    for(var s=0;s<4;s++){ settle(); }
+
+    // Pusatkan orang aktif.
+    if(nodePos[centerId]){
+      var dx = CX - nodePos[centerId].x;
+      Object.keys(nodePos).forEach(function(id){ nodePos[id].x += dx; });
+    }
+
+    var xs = Object.keys(nodePos).map(function(id){ return nodePos[id].x; });
+    var ys = Object.keys(nodePos).map(function(id){ return nodePos[id].y; });
+    var minX = xs.length ? Math.min.apply(null, xs) : 0;
+    var minY = ys.length ? Math.min.apply(null, ys) : 0;
+    var addX = minX < 45 ? 45 - minX : 0;
+    var addY = minY < 45 ? 45 - minY : 0;
+    if(addX || addY){ Object.keys(nodePos).forEach(function(id){ nodePos[id].x += addX; nodePos[id].y += addY; }); }
+  }
+
+
+  function makeStableFocusLayout(renderMembers){
+    nodePos = {};
+    ensureFocus();
+    if(viewMode === "focus"){
+      makeStableFocusLayout(renderMembers);
+      return;
+    }
+
+    var visible = {};
+    renderMembers.forEach(function(m){ visible[m.id] = true; });
+    var centerId = (selectedId && visible[selectedId]) ? selectedId : (focusedId && visible[focusedId] ? focusedId : (renderMembers[0] && renderMembers[0].id));
+    if(!centerId){ return; }
+    focusedId = centerId;
+    selectedId = centerId;
+
+    var W = window.innerWidth < 620 ? 158 : 188;
+    var H = window.innerWidth < 620 ? 128 : 142;
+    var CX = 520;
+    var placed = {};
+
+    function ok(id){ return !!(id && visible[id] && findMember(id)); }
+    function put(id,x,y){
+      if(!ok(id)){ return; }
+      if(!nodePos[id]){ nodePos[id] = {x:x,y:y}; }
+      else{
+        nodePos[id].x = (nodePos[id].x + x) / 2;
+        nodePos[id].y = Math.min(nodePos[id].y, y);
+      }
+      placed[id] = true;
+    }
+    function ancestorDepth(id, guard){
+      if(!ok(id) || guard > 16){ return 0; }
+      var m = findMember(id);
+      var d = 0;
+      if(ok(m.motherId)){ d = Math.max(d, 1 + ancestorDepth(m.motherId, guard + 1)); }
+      if(ok(m.fatherId)){ d = Math.max(d, 1 + ancestorDepth(m.fatherId, guard + 1)); }
+      return d;
+    }
+    function placeAncestors(childId, childX, childY, depth){
+      if(!ok(childId) || depth > 16){ return; }
+      var child = findMember(childId);
+      var hasM = ok(child.motherId);
+      var hasF = ok(child.fatherId);
+      if(!hasM && !hasF){ return; }
+      var sep = Math.max(W * 1.28, 210 - depth * 6);
+      if(hasM && hasF){
+        put(child.motherId, childX - sep / 2, childY - H);
+        put(child.fatherId, childX + sep / 2, childY - H);
+        placeAncestors(child.motherId, childX - sep / 2, childY - H, depth + 1);
+        placeAncestors(child.fatherId, childX + sep / 2, childY - H, depth + 1);
+      }else if(hasM){
+        put(child.motherId, childX, childY - H);
+        placeAncestors(child.motherId, childX, childY - H, depth + 1);
+      }else if(hasF){
+        put(child.fatherId, childX, childY - H);
+        placeAncestors(child.fatherId, childX, childY - H, depth + 1);
+      }
+    }
+    function placeDescendants(parentId, parentX, parentY, depth){
+      if(!ok(parentId) || depth > 16){ return; }
+      var kids = getChildren(parentId).filter(function(c){ return ok(c.id); });
+      if(!kids.length){ return; }
+      kids.sort(function(a,b){ return String(a.name||"").localeCompare(String(b.name||"")); });
+      var gap = Math.max(W * 1.20, 200 - depth * 5);
+      var start = parentX - ((kids.length - 1) * gap) / 2;
+      kids.forEach(function(k,i){
+        var x = start + i * gap;
+        var y = parentY + H;
+        put(k.id, x, y);
+        placeDescendants(k.id, x, y, depth + 1);
+      });
+    }
+
+    var up = ancestorDepth(centerId, 0);
+    var centerY = Math.max(70 + up * H, 70);
+    put(centerId, CX, centerY);
+    placeAncestors(centerId, CX, centerY, 1);
+    placeDescendants(centerId, CX, centerY, 1);
+
+    // Tambahkan pasangan/co-parent yang diperlukan untuk anak yang terlihat.
+    // Contoh fokus ke ibu: anak tampil, ayah anak juga ikut dekat agar keluarga terbaca.
+    for(var pass=0; pass<6; pass++){
+      var changed = false;
+      renderMembers.forEach(function(m){
+        if(!ok(m.id) || nodePos[m.id]){ return; }
+        var kids = getChildren(m.id).filter(function(c){ return nodePos[c.id]; });
+        if(!kids.length){ return; }
+        var child = kids[0];
+        var cp = nodePos[child.id];
+        var other = child.motherId === m.id ? child.fatherId : child.motherId;
+        var op = other && nodePos[other] ? nodePos[other] : null;
+        var side = op && op.x <= cp.x ? 1 : -1;
+        put(m.id, cp.x + side * W * 1.08, cp.y - H);
+        placeAncestors(m.id, nodePos[m.id].x, nodePos[m.id].y, 1);
+        changed = true;
+      });
+      if(!changed){ break; }
+    }
+
+    // Collision resolver per level. Ini menjaga ibu/ayah tidak saling ketimpa,
+    // dan posisi tetap konsisten kiri-kanan.
+    function settleLevels(){
+      var levels = {};
+      Object.keys(nodePos).forEach(function(id){
+        var key = Math.round(nodePos[id].y / H);
+        if(!levels[key]){ levels[key] = []; }
+        levels[key].push(id);
+      });
+      Object.keys(levels).forEach(function(key){
+        var arr = levels[key].sort(function(a,b){ return nodePos[a].x - nodePos[b].x; });
+        var minGap = window.innerWidth < 620 ? 162 : 196;
+        for(var i=1;i<arr.length;i++){
+          var prev = nodePos[arr[i-1]], cur = nodePos[arr[i]];
+          if(cur.x - prev.x < minGap){ cur.x = prev.x + minGap; }
+        }
+      });
+    }
+    function centerParents(){
+      Object.keys(nodePos).forEach(function(id){
+        var m = findMember(id);
+        if(!m){ return; }
+        var kids = getChildren(id).filter(function(c){ return nodePos[c.id]; });
+        if(kids.length){
+          var sum=0; kids.forEach(function(c){ sum += nodePos[c.id].x; });
+          nodePos[id].x = nodePos[id].x * 0.55 + (sum / kids.length) * 0.45;
+        }
+      });
+      Object.keys(nodePos).forEach(function(id){
+        var m = findMember(id);
+        if(!m || !nodePos[id]){ return; }
+        if(ok(m.motherId) && ok(m.fatherId) && nodePos[m.motherId] && nodePos[m.fatherId]){
+          var mid = (nodePos[m.motherId].x + nodePos[m.fatherId].x) / 2;
+          nodePos[id].x = nodePos[id].x * 0.65 + mid * 0.35;
+        }
+      });
+    }
+    for(var i=0;i<6;i++){ centerParents(); settleLevels(); }
+
+    // Pusatkan orang yang dipilih, supaya mode fokus benar-benar fokus.
+    if(nodePos[centerId]){
+      var dx = CX - nodePos[centerId].x;
+      Object.keys(nodePos).forEach(function(id){ nodePos[id].x += dx; });
+    }
+
+    var xs = Object.keys(nodePos).map(function(id){ return nodePos[id].x; });
+    var ys = Object.keys(nodePos).map(function(id){ return nodePos[id].y; });
+    var minX = xs.length ? Math.min.apply(null, xs) : 0;
+    var minY = ys.length ? Math.min.apply(null, ys) : 0;
+    var addX = minX < 45 ? 45 - minX : 0;
+    var addY = minY < 45 ? 45 - minY : 0;
+    if(addX || addY){ Object.keys(nodePos).forEach(function(id){ nodePos[id].x += addX; nodePos[id].y += addY; }); }
+  }
+
+  function makeLayout(){
+    nodePos = {};
+    var renderMembers = getRenderMembers();
+    if(!renderMembers.length){ return; }
+
+    // Mode Fokus harus memakai layout sendiri: hanya jalur aktif orang yang dipilih.
+    // Ini mencegah ibu/ayah/nenek/kakek hilang atau tertimpa oleh layout mode editor/semua.
+    if(viewMode === "focus"){
+      makePureFocusLayout(renderMembers);
+      return;
+    }
+
+    var visible = {};
+    renderMembers.forEach(function(m){ visible[m.id] = true; });
+    var groupInfo = (viewMode === "all" || viewMode === "editor" || viewMode === "pick") ? strictRootMap(renderMembers, visible) : primaryRootMap(renderMembers, visible);
+    currentGroupInfo = groupInfo;
+
+    var W = window.innerWidth < 620 ? 150 : 178;
+    var H = window.innerWidth < 620 ? 124 : 136;
+    var ROOT_X = 520;
+    var depth = {};
+
+    function parentIds(m){
+      var arr = [];
+      if(m.motherId && visible[m.motherId]){ arr.push(m.motherId); }
+      if(m.fatherId && visible[m.fatherId]){ arr.push(m.fatherId); }
+      return arr;
+    }
+
+    // Root adalah orang yang parent-nya tidak terlihat. Ini membuat jalur fokus tetap lurus.
+    renderMembers.forEach(function(m){
+      if(!parentIds(m).length){ depth[m.id] = 0; }
+    });
+    if(!Object.keys(depth).length){ depth[renderMembers[0].id] = 0; }
+
+    // Turunkan level anak dari parent yang terlihat.
+    for(var pass=0; pass<20; pass++){
+      renderMembers.forEach(function(m){
+        var d = depth[m.id];
+        if(d == null){ return; }
+        getRenderChildren(m.id).forEach(function(c){
+          var nd = d + 1;
+          if(depth[c.id] == null || depth[c.id] < nd){ depth[c.id] = nd; }
+        });
+      });
+    }
+    renderMembers.forEach(function(m){ if(depth[m.id] == null){ depth[m.id] = 0; } });
+
+    var levels = {};
+    renderMembers.forEach(function(m){
+      var d = depth[m.id];
+      if(!levels[d]){ levels[d] = []; }
+      levels[d].push(m);
+    });
+
+    function sortName(a,b){ return String(a.name||"").localeCompare(String(b.name||"")); }
+    function sortLevel(arr){
+      arr.sort(function(a,b){
+        var pa = parentIds(a).join("_") || "z_" + a.id;
+        var pb = parentIds(b).join("_") || "z_" + b.id;
+        if(pa !== pb){ return pa.localeCompare(pb); }
+        return sortName(a,b);
+      });
+    }
+
+    Object.keys(levels).forEach(function(k){ sortLevel(levels[k]); });
+
+    // Posisi awal compact.
+    Object.keys(levels).sort(function(a,b){return Number(a)-Number(b);}).forEach(function(dkey){
+      var arr = levels[dkey];
+      var step = (viewMode === "all" || viewMode === "editor" || viewMode === "pick") ? W * 1.22 : W;
+      var start = ROOT_X - ((arr.length - 1) * step) / 2;
+      arr.forEach(function(m,i){ nodePos[m.id] = { x:start + i * step, y:Number(dkey) * H + ((viewMode === "all" || viewMode === "editor" || viewMode === "pick") ? 50 : 40) }; });
+    });
+
+    function childrenOf(id){ return getRenderChildren(id).filter(function(c){ return nodePos[c.id]; }); }
+    function avgX(list){
+      if(!list.length){ return null; }
+      var sum = 0;
+      list.forEach(function(m){ sum += nodePos[m.id].x; });
+      return sum / list.length;
+    }
+    function parentVisible(id){ return id && visible[id] && nodePos[id]; }
+
+    // Solver ringan: parent mengikuti anak, anak berada di tengah parent.
+    for(var iter=0; iter<18; iter++){
+      // Pasangan parent dibuat dekat dan anak di tengahnya.
+      renderMembers.forEach(function(child){
+        var cp = nodePos[child.id];
+        if(!cp){ return; }
+        var hasM = parentVisible(child.motherId);
+        var hasF = parentVisible(child.fatherId);
+        if(hasM && hasF){
+          var m = nodePos[child.motherId];
+          var f = nodePos[child.fatherId];
+          var mid = (m.x + f.x) / 2;
+          cp.x = cp.x * 0.55 + mid * 0.45;
+          var sep = Math.max(W * 1.20, 190);
+          var targetM = cp.x - sep / 2;
+          var targetF = cp.x + sep / 2;
+          m.x = m.x * 0.55 + targetM * 0.45;
+          f.x = f.x * 0.55 + targetF * 0.45;
+        }else if(hasM || hasF){
+          var pid = hasM ? child.motherId : child.fatherId;
+          nodePos[pid].x = nodePos[pid].x * 0.65 + cp.x * 0.35;
+        }
+      });
+
+      // Parent yang punya beberapa anak mengikuti rata-rata anak, supaya saudara tersusun.
+      renderMembers.forEach(function(p){
+        var kids = childrenOf(p.id);
+        var ax = avgX(kids);
+        if(ax != null && nodePos[p.id]){ nodePos[p.id].x = nodePos[p.id].x * 0.70 + ax * 0.30; }
+      });
+
+      // Jaga jarak satu level, tapi tetap compact.
+      Object.keys(levels).forEach(function(dkey){
+        var arr = levels[dkey].slice().sort(function(a,b){ return nodePos[a.id].x - nodePos[b.id].x; });
+        for(var i=1;i<arr.length;i++){
+          var prev = nodePos[arr[i-1].id];
+          var cur = nodePos[arr[i].id];
+          if(cur.x - prev.x < W * 1.10){ cur.x = prev.x + W * 1.10; }
+        }
+        // Center level berdasarkan parent/anak agar tidak kabur jauh ke kanan.
+        if(arr.length){
+          var min = nodePos[arr[0].id].x;
+          var max = nodePos[arr[arr.length-1].id].x;
+          var shift = ROOT_X - (min + max) / 2;
+          arr.forEach(function(m){ nodePos[m.id].x += shift * 0.08; });
+        }
+      });
+    }
+
+    // Rapikan bentuk piramida: leluhur/parent ditempatkan di tengah anak-anak yang tampak.
+    for(var centerPass=0; centerPass<5; centerPass++){
+      Object.keys(levels).sort(function(a,b){return Number(b)-Number(a);}).forEach(function(dkey){
+        levels[dkey].forEach(function(p){
+          var kids = childrenOf(p.id);
+          if(kids.length && nodePos[p.id]){
+            var ax = avgX(kids);
+            if(ax != null){ nodePos[p.id].x = nodePos[p.id].x * 0.35 + ax * 0.65; }
+          }
+        });
+      });
+      Object.keys(levels).forEach(function(dkey){
+        var arr = levels[dkey].slice().sort(function(a,b){ return nodePos[a.id].x - nodePos[b.id].x; });
+        for(var i=1;i<arr.length;i++){
+          var prev = nodePos[arr[i-1].id];
+          var cur = nodePos[arr[i].id];
+          if(cur.x - prev.x < W * 1.08){ cur.x = prev.x + W * 1.08; }
+        }
+      });
+    }
+
+    // Final piramida: leluhur paling atas dipaksa berada di tengah bentang anak/cucunya.
+    // Ini mencegah root/leluhur terlihat menempel ke sisi kiri ketika cabang anak melebar.
+    function settleLevelSpacing(){
+      Object.keys(levels).forEach(function(dkey){
+        var arr = levels[dkey].slice().sort(function(a,b){ return nodePos[a.id].x - nodePos[b.id].x; });
+        var minGap = W * 1.12;
+        for(var i=1;i<arr.length;i++){
+          var prev = nodePos[arr[i-1].id];
+          var cur = nodePos[arr[i].id];
+          if(cur.x - prev.x < minGap){ cur.x = prev.x + minGap; }
+        }
+      });
+    }
+    function centerAncestorsToChildren(){
+      Object.keys(levels).sort(function(a,b){ return Number(b)-Number(a); }).forEach(function(dkey){
+        levels[dkey].forEach(function(p){
+          var kids = childrenOf(p.id);
+          if(kids.length && nodePos[p.id]){
+            var minKid = Infinity, maxKid = -Infinity;
+            kids.forEach(function(k){
+              var kp = nodePos[k.id];
+              if(kp){ minKid = Math.min(minKid, kp.x); maxKid = Math.max(maxKid, kp.x); }
+            });
+            if(minKid < Infinity){ nodePos[p.id].x = (minKid + maxKid) / 2; }
+          }
+        });
+      });
+    }
+    for(var finalPass=0; finalPass<7; finalPass++){
+      centerAncestorsToChildren();
+      settleLevelSpacing();
+    }
+    centerAncestorsToChildren();
+
+    // FIX final: Mode Semua/Editor dipisah per piramida leluhur.
+    // Blok warna hanya menandai area leluhur tunggal. Orang penghubung 2 jalur
+    // diletakkan di tengah luar blok agar tidak ada kotak warna di dalam kotak.
+    function separateRootPyramids(){
+      if(viewMode !== "all" && viewMode !== "editor" && viewMode !== "pick"){ return; }
+      if(!groupInfo || !groupInfo.roots || !groupInfo.roots.length || !groupInfo.membership){ return; }
+
+      var gap = window.innerWidth < 620 ? 54 : 72;
+      var padX = 46;
+      var maxShiftPass = 4;
+
+      function exclusiveIds(rootId){
+        return renderMembers.filter(function(m){
+          var mem = groupInfo.membership[m.id] || [];
+          return mem.length === 1 && mem[0] === rootId && nodePos[m.id];
+        }).map(function(m){ return m.id; });
+      }
+
+      function bbox(ids){
+        var minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+        ids.forEach(function(id){
+          var p=nodePos[id];
+          if(!p){ return; }
+          minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x+150);
+          minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y+104);
+        });
+        if(minX===Infinity){ return null; }
+        return {minX:minX,maxX:maxX,minY:minY,maxY:maxY,width:maxX-minX,height:maxY-minY};
+      }
+
+      // Jangan biarkan dua blok leluhur saling tumpuk. Geser hanya node yang memang
+      // milik satu leluhur tersebut. Node gabungan tidak ikut digeser.
+      for(var pass=0; pass<maxShiftPass; pass++){
+        var blocks = [];
+        groupInfo.roots.forEach(function(root, idx){
+          var ids = exclusiveIds(root.id);
+          if(!ids.length && nodePos[root.id]){ ids = [root.id]; }
+          var b = bbox(ids);
+          if(b){ blocks.push({root:root, ids:ids, box:b, index:idx}); }
+        });
+        if(!blocks.length){ return; }
+
+        blocks.sort(function(a,b){
+          if(a.box.minX !== b.box.minX){ return a.box.minX - b.box.minX; }
+          return String(a.root.name||"").localeCompare(String(b.root.name||""));
+        });
+
+        // Susun blok dari kiri ke kanan dengan jarak aman, tapi tetap compact.
+        var totalWidth = 0;
+        blocks.forEach(function(bl,i){ totalWidth += Math.max(bl.box.width + padX*2, 190); if(i){ totalWidth += gap; } });
+        var startLeft = ROOT_X - totalWidth / 2;
+        var cursor = startLeft;
+        blocks.forEach(function(bl){
+          var wantWidth = Math.max(bl.box.width + padX*2, 190);
+          var targetLeft = cursor + (wantWidth - bl.box.width) / 2;
+          var dx = targetLeft - bl.box.minX;
+          bl.ids.forEach(function(id){ if(nodePos[id]){ nodePos[id].x += dx; } });
+          cursor += wantWidth + gap;
+        });
+      }
+
+      // Setelah blok leluhur digeser, susun ulang orang penghubung di tengah parent-nya.
+      // Contoh: Hanina (jalur Enit) + Saheman (jalur Buden) -> Achmad di tengah bawah.
+      var shared = renderMembers.filter(function(m){ return (groupInfo.membership[m.id] || []).length > 1 && nodePos[m.id]; });
+      for(var si=0; si<8; si++){
+        shared.sort(function(a,b){ return (depth[a.id]||0) - (depth[b.id]||0); });
+        shared.forEach(function(m){
+          var ps=[];
+          if(m.motherId && nodePos[m.motherId]){ ps.push(nodePos[m.motherId]); }
+          if(m.fatherId && nodePos[m.fatherId]){ ps.push(nodePos[m.fatherId]); }
+          if(ps.length){
+            var sum=0; ps.forEach(function(p){ sum += p.x; });
+            nodePos[m.id].x = sum / ps.length;
+          }else{
+            var kids = childrenOf(m.id);
+            var ax = avgX(kids);
+            if(ax != null){ nodePos[m.id].x = ax; }
+          }
+        });
+
+        // Jaga jarak antar node dalam level yang sama setelah node gabungan dipusatkan.
+        Object.keys(levels).forEach(function(dkey){
+          var arr = levels[dkey].slice().filter(function(m){ return nodePos[m.id]; }).sort(function(a,b){ return nodePos[a.id].x - nodePos[b.id].x; });
+          var minGap = window.innerWidth < 620 ? W * 0.98 : W * 1.05;
+          for(var i=1;i<arr.length;i++){
+            var prev = nodePos[arr[i-1].id];
+            var cur = nodePos[arr[i].id];
+            if(cur.x - prev.x < minGap){ cur.x = prev.x + minGap; }
+          }
+        });
+      }
+    }
+    separateRootPyramids();
+
+    // Mode Semua/Editor tidak memaksa setiap root menjadi kolom jauh.
+    // Jika dua jalur terhubung oleh anak yang sama, anak boleh berada di tengah di luar blok warna.
+    // Mode Semua/Editor memakai blok leluhur warna. Posisi node dibiarkan mengikuti solver agar garis tidak terlalu silang.
+    // Pemisahan visual dilakukan oleh ancestorBlock, bukan memaksa node jauh ke kanan/kiri.
+
+    // Kalau mode fokus/editor, pusatkan orang aktif agar kerja edit nyaman.
+    var centerId = selectedId || focusedId;
+    if(centerId && nodePos[centerId] && viewMode !== "all"){
+      var dx = ROOT_X - nodePos[centerId].x;
+      Object.keys(nodePos).forEach(function(id){ nodePos[id].x += dx; });
+    }
+
+    // Margin aman.
+    var xs = Object.keys(nodePos).map(function(id){ return nodePos[id].x; });
+    var ys = Object.keys(nodePos).map(function(id){ return nodePos[id].y; });
+    var minX = xs.length ? Math.min.apply(null, xs) : 0;
+    var minY = ys.length ? Math.min.apply(null, ys) : 0;
+    var addX = minX < 45 ? 45 - minX : 0;
+    var addY = minY < 45 ? 45 - minY : 0;
+    if(addX || addY){ Object.keys(nodePos).forEach(function(id){ nodePos[id].x += addX; nodePos[id].y += addY; }); }
+  }
+
+  function drawTree(){
+    var nodes = $("nodes");
+    var lines = $("lines");
+    var emptyPlus = $("emptyPlus");
+
+    if(!nodes || !lines){ return; }
+
+    nodes.innerHTML = "";
+    lines.innerHTML = "";
+
+    if(!members.length){
+      emptyPlus.classList.remove("hide");
+      applyTransform();
+      return;
+    }
+
+    emptyPlus.classList.add("hide");
+    ensureFocus();
+    var renderMembers = getRenderMembers();
+    makeLayout();
+    var visibleForBlocks = {};
+    renderMembers.forEach(function(m){ visibleForBlocks[m.id] = true; });
+    drawAncestorBlocks(nodes, renderMembers, visibleForBlocks);
+
+    var positions = Object.values(nodePos);
+    var maxW = Math.max.apply(null, positions.map(function(p){ return p.x; })) + 360;
+    var maxH = Math.max.apply(null, positions.map(function(p){ return p.y; })) + 260;
+    lines.setAttribute("width", maxW);
+    lines.setAttribute("height", maxH);
+    var stageEl = $("stage");
+    if(stageEl){ stageEl.style.width = maxW + "px"; stageEl.style.height = maxH + "px"; }
+
+    var activeIds = collectActiveIds();
+
+    renderMembers.forEach(function(parent){
+      var p = nodePos[parent.id];
+      if(!p || isHiddenByEditor(parent.id)){ return; }
+
+      getRenderChildren(parent.id).forEach(function(child){
+        if(isHiddenByEditor(child.id)){ return; }
+        var c = nodePos[child.id];
+        if(!c){ return; }
+
+
+        var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        var x1 = p.x + 75;
+        var y1 = p.y + 76;
+        var x2 = c.x + 75;
+        var y2 = c.y;
+        var midY = (y1 + y2) / 2;
+
+        path.setAttribute("d", "M " + x1 + " " + y1 + " C " + x1 + " " + midY + ", " + x2 + " " + midY + ", " + x2 + " " + y2);
+        path.setAttribute("class", "edge" + (activeIds[parent.id] && activeIds[child.id] ? " active" : ""));
+        lines.appendChild(path);
+        /* tombol cabang dipindah ke kanan/kiri node agar tidak mengotori kabel */
+      });
+    });
+
+    // Mode Editor: buka/tutup cabang saudara memakai tombol kecil di kanan/kiri kotak, bukan di kabel.
+
+    renderMembers.forEach(function(member){
+      var p = nodePos[member.id];
+      if(!p || isHiddenByEditor(member.id)){ return; }
+
+      var div = document.createElement("div");
+      div.className = "node" + (selectedId === member.id ? " active" : "");
+      div.style.left = p.x + "px";
+      div.style.top = p.y + "px";
+      var parentPlusHtml = (member.fatherId && member.motherId) ? "" : "<button class='nodePlus top' type='button' data-act='parent' data-id='" + member.id + "'>+</button>";
+      var g = (member.gender || "").toLowerCase();
+      var genderClass = g === "laki-laki" ? "male" : (g === "perempuan" ? "female" : "unknown");
+      var genderMark = g === "laki-laki" ? "♂" : (g === "perempuan" ? "♀" : "•");
+
+      var branchHtml = "";
+      if(viewMode === "editor" && hasSiblingBranch(member.id)){
+        ["left","right"].forEach(function(side){
+          var vis = visibleSiblings(member.id, side).length;
+          var hid = hiddenSiblings(member.id, side).length;
+          // Merah minus untuk menutup cabang samping di sisi itu.
+          // Kuning plus untuk membuka lagi cabang yang sudah ditutup.
+          // Kalau ada dua-duanya, tampil dua tombol kecil agar tidak bingung.
+          if(vis){ branchHtml += "<button class='sibToggle " + side + " close" + (hid ? " openPair" : "") + "' type='button' data-act='hideSibling' data-side='" + side + "' data-id='" + member.id + "' title='Tutup cabang " + (side === "left" ? "kiri" : "kanan") + "'>−</button>"; }
+          if(hid){ branchHtml += "<button class='sibToggle " + side + " open" + (vis ? " closePair" : "") + "' type='button' data-act='showSibling' data-side='" + side + "' data-id='" + member.id + "' title='Buka cabang " + (side === "left" ? "kiri" : "kanan") + "'>+</button>"; }
+        });
+      }
+      var incompleteHtml = missingFields(member).length ? "<span class='incompleteDot' title='Data belum lengkap'>!</span>" : "";
+      div.innerHTML = "" +
+        parentPlusHtml +
+        branchHtml +
+        incompleteHtml +
+        "<div class='nodeName'>" + escapeHtml(member.name) + "</div>" +
+        "<div class='nodeMeta'>" +
+          "<span class='genderIcon " + genderClass + "' title='" + escapeHtml(member.gender || "") + "'>" + genderMark + "</span>" +
+          "<div class='nodeDate'>" + escapeHtml(birthLine(member)) + "</div>" +
+        "</div>" +
+        "<button class='nodePlus bottom' type='button' data-act='child' data-id='" + member.id + "'>+</button>";
+
+      div.onclick = function(e){
+        if(e.target.classList.contains("nodePlus") || e.target.classList.contains("branchToggle") || e.target.classList.contains("edgeToggle") || e.target.classList.contains("sibToggle")){ return; }
+        var now = Date.now();
+        var isDoubleTap = lastTapId === member.id && (now - lastTapTime) < 360;
+        lastTapId = member.id;
+        lastTapTime = now;
+
+        selectedId = member.id;
+        if(viewMode === "focus"){
+          focusedId = member.id;
+          hiddenBranches = {};
+          collapsedBranches = {};
+          expandedBranches = {};
+        }
+        activeRelation = null;
+
+        if(isDoubleTap){
+          showDetail(member.id);
+        }else{
+          hideDetail();
+        }
+        drawTree();
+      };
+
+      div.ondblclick = function(e){
+        if(e.target.classList.contains("nodePlus") || e.target.classList.contains("branchToggle") || e.target.classList.contains("edgeToggle") || e.target.classList.contains("sibToggle")){ return; }
+        e.preventDefault();
+        selectedId = member.id;
+        if(viewMode === "focus"){
+          focusedId = member.id;
+          hiddenBranches = {};
+          collapsedBranches = {};
+          expandedBranches = {};
+        }
+        activeRelation = null;
+        showDetail(member.id);
+        drawTree();
+      };
+
+      nodes.appendChild(div);
+    });
+
+    if(activeRelation){
+      var base = findMember(activeRelation.id);
+      var bp = nodePos[activeRelation.id];
+      if(base && bp){
+        var wrap = document.createElement("div");
+        wrap.className = "inlineChoice " + activeRelation.type;
+        wrap.style.left = (bp.x + 75) + "px";
+        wrap.style.top = (activeRelation.type === "parent" ? (bp.y - 22) : (bp.y + 108)) + "px";
+        if(activeRelation.type === "parent"){
+          var parentChoices = "";
+          if(!base.motherId){ parentChoices += "<button class='relationBox' data-rel='mother'>Ibu</button>"; }
+          if(!base.fatherId){ parentChoices += "<button class='relationBox' data-rel='father'>Ayah</button>"; }
+          if(!parentChoices){ parentChoices = "<button class='relationBox' data-rel='none'>Lengkap</button>"; }
+          wrap.innerHTML = parentChoices;
+        }else{
+          wrap.innerHTML = "<button class='relationBox' data-rel='father'>Ayah</button><button class='relationBox' data-rel='mother'>Ibu</button>";
+        }
+        nodes.appendChild(wrap);
+        wrap.querySelectorAll("button").forEach(function(btn){
+          btn.onpointerdown = function(e){ e.stopPropagation(); };
+          btn.onpointerup = function(e){ e.stopPropagation(); };
+          btn.onclick = function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            var rel = btn.getAttribute("data-rel");
+            if(rel === "none"){ activeRelation = null; drawTree(); return; }
+            var current = activeRelation;
+            activeRelation = null;
+            if(current.type === "parent"){
+              openPersonModal({ type:"newParent", childId:current.id, rel:rel });
+            }else{
+              openPersonModal({ type:"newChild", parentId:current.id, rel:rel });
+            }
+          };
+        });
+      }
+    }
+
+    nodes.querySelectorAll(".nodePlus").forEach(function(button){
+      button.onpointerdown = function(e){
+        e.stopPropagation();
+      };
+      button.onpointerup = function(e){
+        e.stopPropagation();
+      };
+      button.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var id = button.getAttribute("data-id");
+        var action = button.getAttribute("data-act");
+        if(action === "parent"){
+          chooseParentType(id);
+        }else{
+          chooseChildType(id);
+        }
+      };
+    });
+    nodes.querySelectorAll(".branchToggle,.sibToggle").forEach(function(button){
+      button.onpointerdown = function(e){ e.stopPropagation(); };
+      button.onpointerup = function(e){ e.stopPropagation(); };
+      button.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var id = button.getAttribute("data-id") || button.getAttribute("data-branch");
+        var act = button.getAttribute("data-act");
+        var side = button.getAttribute("data-side");
+        if(act === "hideSibling"){ hideOneSibling(id, side); return; }
+        if(act === "showSibling"){ showOneSibling(id, side); return; }
+        var key = siblingKey(id);
+        if(branchIsOpen(id)){
+          collapsedBranches[key] = true;
+          delete expandedBranches[key];
+        }else{
+          delete collapsedBranches[key];
+          expandedBranches[key] = true;
+        }
+        drawTree();
+      };
+    });
+
+    applyTransform();
+  }
+
+  function relationItem(role, memberId){
+    var m = findMember(memberId);
+    if(!m){ return ""; }
+    return "<div class='relItem' data-jump='" + m.id + "'>" +
+      "<div class='relRole'>" + escapeHtml(role) + "</div>" +
+      "<div class='relName'>" + escapeHtml(m.name || "-") + "</div>" +
+      "<div class='nodeDate'>" + escapeHtml(birthLine(m)) + "</div>" +
+    "</div>";
+  }
+
+  function genderRole(m, female, male, neutral){
+    if(!m){ return neutral || "Keluarga"; }
+    if(m.gender === "perempuan"){ return female; }
+    if(m.gender === "laki-laki"){ return male; }
+    return neutral || "Keluarga";
+  }
+
+  function collectAncestorsTopDown(memberId, jalur, depth, out){
+    var p = findMember(memberId);
+    if(!p){ return; }
+    var nextJalur = jalur;
+    if(depth === 1){
+      nextJalur = (p.gender === "perempuan") ? "ibu" : (p.gender === "laki-laki" ? "ayah" : jalur);
+    }
+    collectAncestorsTopDown(p.motherId, nextJalur, depth + 1, out);
+    collectAncestorsTopDown(p.fatherId, nextJalur, depth + 1, out);
+
+    var role = "Leluhur";
+    if(depth === 1){
+      role = genderRole(p, "Ibu", "Ayah", "Orang tua");
+    }else if(depth === 2){
+      role = genderRole(p, "Nenek", "Kakek", "Kakek/Nenek") + (jalur ? " dari " + jalur : "");
+    }else if(depth === 3){
+      role = genderRole(p, "Buyut perempuan", "Buyut laki-laki", "Buyut") + (jalur ? " dari jalur " + jalur : "");
+    }else{
+      role = genderRole(p, "Leluhur perempuan", "Leluhur laki-laki", "Leluhur") + " tingkat " + depth + (jalur ? " dari jalur " + jalur : "");
+    }
+    out.push({ role: role, id: p.id });
+  }
+
+  function collectDescendants(memberId, depth, out){
+    var kids = getChildren(memberId);
+    kids.forEach(function(k){
+      var role = depth === 1 ? "Anak" : (depth === 2 ? "Cucu" : (depth === 3 ? "Cicit" : "Turunan tingkat " + depth));
+      out.push({ role: role, id: k.id });
+      collectDescendants(k.id, depth + 1, out);
+    });
+  }
+
+  function buildRelationList(m){
+    var list = [];
+    collectAncestorsTopDown(m.motherId, "ibu", 1, list);
+    collectAncestorsTopDown(m.fatherId, "ayah", 1, list);
+    collectDescendants(m.id, 1, list);
+
+    var seen = {};
+    var html = "";
+    list.forEach(function(x){
+      if(!x.id || seen[x.role + x.id]){ return; }
+      seen[x.role + x.id] = true;
+      html += relationItem(x.role, x.id);
+    });
+    return html || "<div class='emptyRel'>Belum ada relasi keluarga.</div>";
+  }
+
+
+  function extraDetailHtml(m){
+    var status = m.lifeStatus || "";
+    var death = m.deathDate || "";
+    var job = m.job || "";
+    var address = m.address || "";
+    var story = m.story || "";
+    var link = m.galleryLink || "";
+    var sourceInfo = m.sourceInfo || "";
+    var hasExtra = status || death || job || address || story || link || sourceInfo;
+    if(!hasExtra){ return ""; }
+    var html = "<div class='card'>" +
+      "<div class='cardName' style='font-size:16px'>Profil tambahan</div>" +
+      "<div class='infoList'>";
+    if(status){ html += "<div class='infoItem'><span>Status</span><b>" + escapeHtml(status) + "</b></div>"; }
+    if(death){ html += "<div class='infoItem'><span>Tanggal wafat</span><b>" + escapeHtml(death) + "</b></div>"; }
+    if(job){ html += "<div class='infoItem'><span>Pekerjaan</span><b>" + escapeHtml(job) + "</b></div>"; }
+    if(address){ html += "<div class='infoItem'><span>Alamat</span><b>" + escapeHtml(address) + "</b></div>"; }
+    if(sourceInfo){ html += "<div class='infoItem'><span>Sumber info</span><b>" + escapeHtml(sourceInfo) + "</b></div>"; }
+    html += "</div>";
+    if(story){ html += "<div class='row' style='font-size:12px;margin-top:8px;white-space:pre-wrap'>" + escapeHtml(story) + "</div>"; }
+    if(link){ html += "<button class='btn wide' id='galleryBtn' style='width:100%;margin-top:10px' type='button'>Buka Galeri</button>"; }
+    html += "</div>";
+    return html;
+  }
+
+  function hideDetail(){
+    document.body.classList.remove("detailMode");
+    var side = $("side");
+    var main = $("main");
+    if(side){ side.classList.add("closed"); }
+    if(main){ main.classList.remove("detailOpen"); }
+  }
+
+  function showDetail(id){
+    var m = findMember(id);
+    var side = $("side");
+    var detail = $("detail");
+    var main = $("main");
+    if(!m || !side || !detail){ return; }
+
+    document.body.classList.add("detailMode");
+    side.classList.remove("closed");
+    if(main){ main.classList.add("detailOpen"); }
+
+    detail.innerHTML = "" +
+      "<div class='detailTop'><h2>Detail</h2><div class='detailControls'><button class='closeDetail' id='closeDetail' type='button'>Kembali</button></div></div>" +
+      "<div class='card'>" +
+        "<div class='cardName'>" + escapeHtml(m.name) + "</div>" +
+        "<div class='infoList'>" +
+          "<div class='infoItem'><span>Jenis kelamin</span><b>" + escapeHtml(m.gender || "-") + "</b></div>" +
+          "<div class='infoItem'><span>Tempat lahir</span><b>" + escapeHtml(m.birthPlace || "-") + "</b></div>" +
+          "<div class='infoItem'><span>Tanggal lahir</span><b>" + escapeHtml(m.birthDate || "-") + "</b></div>" +
+        "</div>" +
+        (missingFields(m).length ? "<div class='missingBox'>Data belum lengkap: " + escapeHtml(missingFields(m).join(", ")) + "</div>" : "") +
+      "</div>" +
+      "<div class='card'>" +
+        "<div class='cardName' style='font-size:16px'>Keluarga</div>" +
+        "<div class='relList'>" + buildRelationList(m) + "</div>" +
+      "</div>" +
+      extraDetailHtml(m) +
+      "<div class='card actionCard'>" +
+        "<div class='actions'>" +
+          "<button class='btn ghost wide' id='copySummaryBtn'>Salin Ringkasan</button>" +
+          "<button class='btn wide' id='editBtn'>Edit Data</button>" +
+          "<button class='btn danger wide' id='deleteBtn'>Hapus</button>" +
+        "</div>" +
+        "<div class='copyOk' id='copyStatus'></div>" +
+      "</div>";
+
+    syncThemeButtons();
+    $("closeDetail").onclick = function(){ hideDetail(); };
+    var copyBtn = $("copySummaryBtn");
+    if(copyBtn){ copyBtn.onclick = function(){ copySummary(id); }; }
+    $("editBtn").onclick = function(){ openPersonModal({ type:"edit", member:m }); };
+    $("deleteBtn").onclick = function(){ deleteMember(id); };
+    var galleryBtn = $("galleryBtn");
+    if(galleryBtn){ galleryBtn.onclick = function(){ window.open(m.galleryLink, "_blank"); }; }
+
+    detail.querySelectorAll(".relItem").forEach(function(item){
+      item.onclick = function(){
+        var jumpId = item.getAttribute("data-jump");
+        selectedId = jumpId;
+        focusedId = jumpId;
+        if(viewMode === "focus"){
+          hiddenBranches = {};
+          collapsedBranches = {};
+          expandedBranches = {};
+        }
+        showDetail(jumpId);
+        drawTree();
+        setTimeout(function(){ focusNode(jumpId); }, 40);
+      };
+    });
+  }
+
+  function openModal(html){
+    closeModal();
+    var overlay = document.createElement("div");
+    overlay.className = "modal";
+    overlay.id = "modal";
+    overlay.innerHTML = "<div class='modalBox'>" + html + "</div>";
+    document.body.appendChild(overlay);
+    overlay.onclick = function(e){
+      if(e.target === overlay){ closeModal(); }
+    };
+  }
+
+  function closeModal(){
+    var modal = $("modal");
+    if(modal){ modal.remove(); }
+  }
+
+  function chooseParentType(childId){
+    var child = findMember(childId);
+    if(child && child.fatherId && child.motherId){
+      activeRelation = null;
+      drawTree();
+      return;
+    }
+    activeRelation = { type:"parent", id:childId };
+    drawTree();
+  }
+
+  function chooseChildType(parentId){
+    var parent = findMember(parentId);
+    var g = parent ? String(parent.gender || "").toLowerCase() : "";
+    if(g === "laki-laki"){
+      activeRelation = null;
+      openPersonModal({ type:"newChild", parentId:parentId, rel:"father" });
+      return;
+    }
+    if(g === "perempuan"){
+      activeRelation = null;
+      openPersonModal({ type:"newChild", parentId:parentId, rel:"mother" });
+      return;
+    }
+    activeRelation = { type:"child", id:parentId };
+    drawTree();
+  }
+
+
+  function splitBirthDate(value){
+    value = String(value || "").trim();
+    var out = {day:"", month:"", year:""};
+    if(!value){ return out; }
+    var parts = value.split(" ").filter(Boolean);
+    if(parts.length >= 3){
+      out.day = parts[0] || "";
+      out.month = parts[1] || "";
+      out.year = parts.slice(2).join(" ") || "";
+    }else if(parts.length === 1){
+      out.year = parts[0];
+    }
+    return out;
+  }
+
+  function combineBirthDate(){
+    var d = $("fDay") ? $("fDay").value.trim() : "";
+    var m = $("fMonth") ? $("fMonth").value.trim() : "";
+    var y = $("fYear") ? $("fYear").value.trim() : "";
+    return [d,m,y].filter(Boolean).join(" ");
+  }
+
+  function monthOptions(selected){
+    var months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    var html = "<option value=''>Bulan</option>";
+    for(var i=0;i<months.length;i++){
+      html += "<option value='" + months[i] + "'" + (selected === months[i] ? " selected='selected'" : "") + ">" + months[i] + "</option>";
+    }
+    return html;
+  }
+
+
+  function extraEditFields(m){
+    var death = splitBirthDate(m.deathDate || "");
+    return "" +
+      "<input id='fJob' placeholder='Pekerjaan' value='" + escapeHtml(m.job || "") + "'/>" +
+      "<input id='fAddress' placeholder='Alamat rumah' value='" + escapeHtml(m.address || "") + "'/>" +
+      "<select id='fLifeStatus'>" +
+        "<option value=''>Status hidup / wafat</option>" +
+        "<option value='hidup'>Hidup</option>" +
+        "<option value='wafat'>Wafat</option>" +
+      "</select>" +
+      "<div class='birthGrid'>" +
+        "<input class='place' disabled='disabled' value='Tanggal wafat'/>" +
+        "<input id='fDeathDay' inputmode='numeric' maxlength='2' placeholder='Tanggal' value='" + escapeHtml(death.day || "") + "'/>" +
+        "<select id='fDeathMonth'>" + monthOptions(death.month || "") + "</select>" +
+        "<input id='fDeathYear' inputmode='numeric' maxlength='4' placeholder='Tahun' value='" + escapeHtml(death.year || "") + "'/>" +
+      "</div>" +
+      "<input id='fGalleryLink' placeholder='Link galeri MEGA / Drive / Photos' value='" + escapeHtml(m.galleryLink || "") + "'/>" +
+      "<input id='fSourceInfo' placeholder='Sumber info, contoh: dari ibu / KK / buku nikah' value='" + escapeHtml(m.sourceInfo || "") + "'/>" +
+      "<textarea id='fStory' placeholder='Kisah / catatan' rows='4'>" + escapeHtml(m.story || "") + "</textarea>";
+  }
+
+  function combineDateFields(dayId, monthId, yearId){
+    var d = $(dayId) ? $(dayId).value.trim() : "";
+    var m = $(monthId) ? $(monthId).value.trim() : "";
+    var y = $(yearId) ? $(yearId).value.trim() : "";
+    return [d,m,y].filter(Boolean).join(" ");
+  }
+
+  function openPersonModal(options){
+    var m = options.member || {};
+    var bd = splitBirthDate(m.birthDate || "");
+    openModal("" +
+      "<div class='modalTitle'>" + (options.type === "edit" ? "Edit" : "Tambah") + "</div>" +
+      "<form id='personForm'>" +
+        "<input id='fName' required='required' placeholder='Nama' value='" + escapeHtml(m.name || "") + "'/>" +
+        "<div class='birthGrid'>" +
+          "<input class='place' id='fPlace' placeholder='Tempat lahir' value='" + escapeHtml(m.birthPlace || "") + "'/>" +
+          "<input id='fDay' inputmode='numeric' maxlength='2' placeholder='Tanggal' value='" + escapeHtml(bd.day || "") + "'/>" +
+          "<select id='fMonth'>" + monthOptions(bd.month || "") + "</select>" +
+          "<input id='fYear' inputmode='numeric' maxlength='4' placeholder='Tahun' value='" + escapeHtml(bd.year || "") + "'/>" +
+        "</div>" +
+        "<select id='fGender'>" +
+          "<option value=''>Jenis kelamin</option>" +
+          "<option value='laki-laki'>Laki-laki</option>" +
+          "<option value='perempuan'>Perempuan</option>" +
+        "</select>" +
+        (options.type === "edit" ? extraEditFields(m) : "") +
+        "<div class='modalActions'>" +
+          "<button class='btn ghost' type='button' id='cancelBtn'>Batal</button>" +
+          "<button class='btn' type='submit'>Simpan</button>" +
+        "</div>" +
+        "<div class='msg' id='formMsg'></div>" +
+      "</form>"
+    );
+
+    $("fGender").value = m.gender || "";
+    if($("fLifeStatus")){ $("fLifeStatus").value = m.lifeStatus || ""; }
+    $("cancelBtn").onclick = closeModal;
+    $("personForm").onsubmit = function(e){
+      e.preventDefault();
+      savePerson(options);
+    };
+  }
+
+  function savePerson(options){
+    var formMsg = $("formMsg");
+    formMsg.textContent = "";
+
+    var data = {
+      name: $("fName").value.trim(),
+      birthPlace: $("fPlace").value.trim(),
+      birthDate: combineBirthDate(),
+      gender: $("fGender").value,
+      updatedAt: timestamp()
+    };
+
+    if(options.type === "edit"){
+      data.job = $("fJob") ? $("fJob").value.trim() : "";
+      data.address = $("fAddress") ? $("fAddress").value.trim() : "";
+      data.lifeStatus = $("fLifeStatus") ? $("fLifeStatus").value : "";
+      data.deathDate = combineDateFields("fDeathDay", "fDeathMonth", "fDeathYear");
+      data.galleryLink = $("fGalleryLink") ? $("fGalleryLink").value.trim() : "";
+      data.story = $("fStory") ? $("fStory").value.trim() : "";
+      data.sourceInfo = $("fSourceInfo") ? $("fSourceInfo").value.trim() : "";
+    }
+
+    if(!data.name){
+      formMsg.textContent = "Nama wajib diisi.";
+      return;
+    }
+
+    if(options.type === "edit"){
+      var editId = options.member.id;
+      var localEdit = Object.assign({}, options.member, data, { id: editId });
+      col.doc(editId).update(data)
+        .then(function(){
+          members = members.map(function(x){ return x.id === editId ? localEdit : x; });
+          saveCache();
+          drawTree();
+          if(selectedId === editId){ showDetail(editId); }
+          closeModal();
+        })
+        .catch(function(err){ formMsg.textContent = "Gagal: " + err.message; });
+      return;
+    }
+
+    data.createdAt = timestamp();
+    data.fatherId = "";
+    data.motherId = "";
+
+    if(options.type === "newChild"){
+      if(options.rel === "father"){
+        data.fatherId = options.parentId;
+      }else{
+        data.motherId = options.parentId;
+      }
+
+      var childRef = col.doc();
+      var childLocal = Object.assign({}, data, { id: childRef.id });
+      col.doc(childRef.id).set(data)
+        .then(function(){
+          members.push(childLocal);
+          selectedId = childRef.id;
+          focusedId = childRef.id;
+          viewMode = "focus";
+          saveCache();
+          drawTree();
+          closeModal();
+        })
+        .catch(function(err){ formMsg.textContent = "Gagal: " + err.message; });
+      return;
+    }
+
+    if(options.type === "newParent"){
+      var childNow = findMember(options.childId);
+      if(childNow && ((options.rel === "father" && childNow.fatherId) || (options.rel === "mother" && childNow.motherId))){
+        formMsg.textContent = "Data " + (options.rel === "father" ? "ayah" : "ibu") + " sudah ada.";
+        return;
+      }
+      var parentRef = col.doc();
+      var parentLocal = Object.assign({}, data, { id: parentRef.id });
+      var update = { updatedAt: timestamp() };
+      if(options.rel === "father"){
+        update.fatherId = parentRef.id;
+      }else{
+        update.motherId = parentRef.id;
+      }
+      var batchParent = db.batch();
+      batchParent.set(parentRef, data);
+      batchParent.update(col.doc(options.childId), update);
+      batchParent.commit()
+        .then(function(){
+          members.push(parentLocal);
+          members = members.map(function(x){
+            if(x.id === options.childId){ return Object.assign({}, x, update); }
+            return x;
+          });
+          selectedId = parentRef.id;
+          focusedId = parentRef.id;
+          viewMode = "focus";
+          saveCache();
+          drawTree();
+          closeModal();
+        })
+        .catch(function(err){ formMsg.textContent = "Gagal: " + err.message; });
+      return;
+    }
+
+    var rootRef = col.doc();
+    var rootLocal = Object.assign({}, data, { id: rootRef.id });
+    col.doc(rootRef.id).set(data)
+      .then(function(){
+        members.push(rootLocal);
+        selectedId = rootRef.id;
+        focusedId = rootRef.id;
+        viewMode = "focus";
+        saveCache();
+        drawTree();
+        closeModal();
+      })
+      .catch(function(err){ formMsg.textContent = "Gagal: " + err.message; });
+  }
+
+  function deleteMember(id){
+    if(!confirm("Hapus data ini?")){ return; }
+
+    var batch = db.batch();
+
+    members.forEach(function(m){
+      var update = { updatedAt: timestamp() };
+      var need = false;
+      if(m.fatherId === id){ update.fatherId = ""; need = true; }
+      if(m.motherId === id){ update.motherId = ""; need = true; }
+      if(need){ batch.update(col.doc(m.id), update); }
+    });
+
+    batch.delete(col.doc(id));
+    batch.commit().then(function(){
+      members = members.filter(function(m){ return m.id !== id; }).map(function(m){
+        var copy = Object.assign({}, m);
+        if(copy.fatherId === id){ copy.fatherId = ""; }
+        if(copy.motherId === id){ copy.motherId = ""; }
+        return copy;
+      });
+      selectedId = "";
+      saveCache();
+      drawTree();
+      hideDetail();
+    }).catch(function(err){ alert(err.message); });
+  }
+
+  function setupSearch(){
+    var input = $("searchInput");
+    var list = $("searchList");
+    var searchTimer = null;
+
+    function resetEditorBranchesForFocus(){
+      hiddenBranches = {};
+      collapsedBranches = {};
+      expandedBranches = {};
+    }
+
+    function goFocusTo(id, openDetail){
+      if(!id || !findMember(id)){ return; }
+      selectedId = id;
+      focusedId = id;
+      viewMode = "focus";
+      resetEditorBranchesForFocus();
+      updateModePill();
+      if(openDetail){ showDetail(id); } else { hideDetail(); }
+      drawTree();
+      setTimeout(function(){ focusNode(id); }, 40);
+    }
+
+    function bestSearchResult(q){
+      var query = String(q || "").trim().toLowerCase();
+      if(!query){ return null; }
+      var results = members.filter(function(m){
+        return String(m.name || "").toLowerCase().indexOf(query) !== -1;
+      });
+      if(!results.length){ return null; }
+      var exact = results.find(function(m){ return String(m.name || "").toLowerCase() === query; });
+      return exact || results[0];
+    }
+
+    input.oninput = function(){
+      var q = input.value.trim().toLowerCase();
+      if(!q){
+        list.classList.add("hide");
+        list.innerHTML = "";
+        return;
+      }
+
+      var results = members.filter(function(m){
+        return String(m.name || "").toLowerCase().indexOf(q) !== -1;
+      }).slice(0, 10);
+
+      if(!results.length){
+        list.innerHTML = "<div class='searchItem'>Tidak ada</div>";
+      }else{
+        list.innerHTML = results.map(function(m){
+          return "<div class='searchItem' data-id='" + m.id + "'>" + escapeHtml(m.name) + "</div>";
+        }).join("");
+      }
+
+      list.classList.remove("hide");
+
+      // Saat mengetik nama di Mode Fokus, langsung pindah fokus ke hasil pertama.
+      // Ini menjawab masalah: mengetik nama tapi tree tidak berubah.
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function(){
+        if(q.length >= 2){
+          var best = bestSearchResult(q);
+          if(best){ goFocusTo(best.id, false); }
+        }
+      }, 180);
+
+      list.querySelectorAll("[data-id]").forEach(function(item){
+        item.onclick = function(){
+          var id = item.getAttribute("data-id");
+          input.value = "";
+          list.classList.add("hide");
+          goFocusTo(id, false);
+        };
+      });
+    };
+
+    input.onkeydown = function(e){
+      if(e.key === "Enter"){
+        e.preventDefault();
+        var best = bestSearchResult(input.value);
+        if(best){
+          input.value = "";
+          list.classList.add("hide");
+          goFocusTo(best.id, false);
+        }
+      }
+    };
+  }
+
+  function applyTransform(){
+    var stage = $("stage");
+    if(stage){
+      stage.style.transform = "translate(" + panX + "px," + panY + "px) scale(" + scale + ")";
+    }
+  }
+
+  function setupCanvas(){
+    var canvas = $("canvas");
+    scale = 1;
+    panX = 90;
+    panY = 85;
+    pointers = {};
+    pointerCount = 0;
+    drag = null;
+    pinch = null;
+    applyTransform();
+
+    canvas.onwheel = function(e){
+      e.preventDefault();
+      var rect = canvas.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+      var oldScale = scale;
+      scale = Math.min(2.6, Math.max(.35, scale * (e.deltaY < 0 ? 1.08 : .92)));
+      panX = mx - (mx - panX) * (scale / oldScale);
+      panY = my - (my - panY) * (scale / oldScale);
+      applyTransform();
+    };
+
+    canvas.onpointerdown = function(e){
+      if(e.target.closest && e.target.closest("button,input,select,textarea,.emptyPlus,.nodePlus,.branchToggle,.edgeToggle,.relationBox,.node,.modal,.side,.topbar")){
+        return;
+      }
+      canvas.setPointerCapture(e.pointerId);
+      pointers[e.pointerId] = { x:e.clientX, y:e.clientY };
+      pointerCount = Object.keys(pointers).length;
+
+      if(pointerCount === 1){
+        drag = { x:e.clientX, y:e.clientY, panX:panX, panY:panY };
+      }
+
+      if(pointerCount === 2){
+        var arr = Object.values(pointers);
+        pinch = {
+          dist: Math.hypot(arr[0].x - arr[1].x, arr[0].y - arr[1].y),
+          scale: scale
+        };
+      }
+    };
+
+    canvas.onpointermove = function(e){
+      if(!pointers[e.pointerId]){ return; }
+      pointers[e.pointerId] = { x:e.clientX, y:e.clientY };
+      pointerCount = Object.keys(pointers).length;
+
+      if(pointerCount === 2 && pinch){
+        var arr = Object.values(pointers);
+        var dist = Math.hypot(arr[0].x - arr[1].x, arr[0].y - arr[1].y);
+        scale = Math.min(2.6, Math.max(.35, pinch.scale * dist / pinch.dist));
+        applyTransform();
+        return;
+      }
+
+      if(pointerCount === 1 && drag){
+        panX = drag.panX + (e.clientX - drag.x);
+        panY = drag.panY + (e.clientY - drag.y);
+        applyTransform();
+      }
+    };
+
+    function clearPointer(e){
+      delete pointers[e.pointerId];
+      pointerCount = Object.keys(pointers).length;
+      if(pointerCount === 0){
+        drag = null;
+        pinch = null;
+      }
+    }
+
+    canvas.onpointerup = clearPointer;
+    canvas.onpointercancel = clearPointer;
+  }
+
+  function focusNode(id){
+    var p = nodePos[id];
+    var canvas = $("canvas");
+    if(!p || !canvas){ return; }
+
+    var rect = canvas.getBoundingClientRect();
+    scale = Math.max(.8, Math.min(scale, 1.15));
+    panX = rect.width / 2 - (p.x + 75) * scale;
+    panY = rect.height / 2 - (p.y + 38) * scale;
+    applyTransform();
+  }
+
+  window.onerror = function(message){
+    showMsg("Error script: " + message);
+  };
+
+  window.onunhandledrejection = function(e){
+    var msg = e.reason && e.reason.message ? e.reason.message : String(e.reason || "");
+    showMsg("Error promise: " + msg);
+  };
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initFirebase);
+  }else{
+    initFirebase();
+  }
+})();
+//]]>
+</script>
+</body>
+</html>
